@@ -3,274 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grenzgänger Rechner · CH→DE</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Grenzgänger-Netto · CH→DE</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:#f2f4f7; --surface:#ffffff; --surface2:#eaecf0; --border:#d0d5dd;
-    --accent:#1a3a6b; --accent2:#c49a2a; --text:#1a2235; --muted:#5a6480;
-    --ch-red:#c0302a; --de-gold:#c49a2a; --purple:#4a3a8a;
-    --btn-active-text:#ffffff;
-    --muted-dim:#9aa0b4; --border-hover:#a0a8bc;
-    --grid-line:rgba(26,58,107,.025);
+
+/* ── G-DESIGN SYSTEM ── */
+:root,[data-theme="dark"]{
+  --bg:#0c1410;--surface:#13201a;--surface2:#192b22;--border:#213328;
+  --accent:#5d9e7a;--accent-lt:#89c4a2;--accent-dim:rgba(93,158,122,0.13);
+  --text:#ddeee5;--text-muted:#6e9480;
+}
+[data-theme="light"]{
+  --bg:#f0f7f3;--surface:#ffffff;--surface2:#e6f2eb;--border:#bdd8c8;
+  --accent:#2e7a50;--accent-lt:#1e5c3a;--accent-dim:rgba(46,122,80,0.10);
+  --text:#0f1f16;--text-muted:#4d7a5e;
+}
+@media(prefers-color-scheme:light){
+  :root:not([data-theme]){
+    --bg:#f0f7f3;--surface:#ffffff;--surface2:#e6f2eb;--border:#bdd8c8;
+    --accent:#2e7a50;--accent-lt:#1e5c3a;--accent-dim:rgba(46,122,80,0.10);
+    --text:#0f1f16;--text-muted:#4d7a5e;
   }
-  [data-theme="dark"] {
-    --bg:#0f1520; --surface:#16202f; --surface2:#1d2a3d; --border:#2a3650;
-    --accent:#4a7fd4; --accent2:#e0b84a; --text:#d8e0f0; --muted:#7a88aa;
-    --ch-red:#e8403a; --de-gold:#e0b84a; --purple:#8070e0;
-    --btn-active-text:#0d1525;
-    --muted-dim:#3a4a6a; --border-hover:#3a4f72;
-    --grid-line:rgba(74,127,212,.04);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]):not([data-theme="dark"]) {
-      --bg:#0f1520; --surface:#16202f; --surface2:#1d2a3d; --border:#2a3650;
-      --accent:#4a7fd4; --accent2:#e0b84a; --text:#d8e0f0; --muted:#7a88aa;
-      --ch-red:#e8403a; --de-gold:#e0b84a; --purple:#8070e0;
-      --btn-active-text:#0d1525;
-      --muted-dim:#3a4a6a; --border-hover:#3a4f72;
-      --grid-line:rgba(74,127,212,.04);
-    }
-  }
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-weight:300;min-height:100vh;padding:40px 20px 80px;transition:background .25s,color .25s;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(93,158,122,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(93,158,122,0.04) 1px,transparent 1px);background-size:40px 40px;}
+.container{max-width:960px;margin:0 auto;position:relative;z-index:1;}
 
-  /* ── Theme Toggle ── */
-  .theme-toggle{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:4px;flex-shrink:0}
-  .theme-btn{background:none;border:none;border-radius:7px;padding:5px 9px;cursor:pointer;font-size:14px;line-height:1;color:rgba(255,255,255,0.6);transition:all .15s}
-  .theme-btn.active{background:rgba(255,255,255,0.2);box-shadow:0 1px 3px rgba(0,0,0,.25);color:#fff}
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
-  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-  .container{max-width:980px;margin:0 auto;padding:40px 24px 80px;position:relative;z-index:1}
-  header{display:block;margin-bottom:36px}
-  .header-banner{display:flex;align-items:center;gap:20px;background:var(--accent);border-radius:14px;padding:16px 24px;position:relative}
-  .header-banner-logo{height:56px;width:auto;object-fit:contain;flex-shrink:0}
-  .header-banner-logo-fallback{display:none;align-items:center;justify-content:center;width:56px;height:56px;background:rgba(255,255,255,0.15);border-radius:8px;font-family:'DM Mono',monospace;font-size:18px;font-weight:700;color:#fff;letter-spacing:-.03em;flex-shrink:0}
-  .header-banner-divider{width:1px;height:40px;background:rgba(255,255,255,0.2);flex-shrink:0}
-  .header-banner-text{flex:1;min-width:0}
-  .header-banner-title{font-family:'DM Sans',sans-serif;font-size:clamp(16px,2.5vw,22px);font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
-  .header-banner-sub{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.65);letter-spacing:.04em;margin-top:4px}
-  .title-block h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,48px);font-weight:700;line-height:1.1;letter-spacing:-.02em}
-  .title-block p{margin-top:10px;color:var(--muted);font-size:14px;font-family:'DM Mono',monospace;letter-spacing:.05em}
-  .flags{display:flex;align-items:center;gap:10px;font-size:32px;opacity:.85}
-  .arrow-flag{font-size:16px;color:var(--muted);font-family:'DM Mono',monospace}
+/* Theme Toggle */
+.theme-toggle{position:fixed;top:18px;right:20px;display:flex;gap:3px;z-index:1000;background:var(--surface);border:1px solid var(--border);padding:4px;}
+.theme-btn{width:28px;height:28px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:all .2s;padding:0;}
+.theme-btn:hover{color:var(--accent);}
+.theme-btn.active{color:var(--accent);background:var(--accent-dim);}
+.theme-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 
-  /* ── Top-Banner: Jahr + Periode ── */
-  .top-banner{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
-  .banner-group{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .banner-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-  .pill-group{display:flex;gap:6px}
-  .pill-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:'DM Mono',monospace;font-size:13px;font-weight:500;padding:8px 18px;cursor:pointer;transition:all .2s;letter-spacing:.04em}
-  .pill-btn.active{background:var(--accent);border-color:var(--accent);color:var(--btn-active-text);font-weight:700}
-  .pill-btn:hover:not(.active){border-color:var(--border-hover);color:var(--text)}
-  .banner-sep{width:1px;height:32px;background:var(--border);flex-shrink:0}
-  .banner-info{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted-dim);margin-left:auto}
+/* Header */
+header{text-align:center;margin-bottom:40px;}
+.badge{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-dim);padding:4px 14px;margin-bottom:18px;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,44px);font-weight:600;line-height:1.15;color:var(--text);margin-bottom:10px;}
+h1 span{color:var(--accent);}
+.subtitle{font-size:12px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;letter-spacing:0.5px;}
 
-  /* ── Brutto dual-input ── */
-  .brutto-dual{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:end}
-  .brutto-dual .sep-arrow{display:flex;align-items:center;justify-content:center;padding:0 10px;padding-bottom:10px;color:var(--muted);font-family:'DM Mono',monospace;font-size:12px}
-  .brutto-dual .input-block label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px;font-family:'DM Mono',monospace;letter-spacing:.06em;text-transform:uppercase}
-  .brutto-dual .input-block label.active-period{color:var(--accent)}
-  .brutto-dual .input-wrap{position:relative}
-  .brutto-dual input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:15px;padding:10px 52px 10px 12px;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none}
-  .brutto-dual input.active-input{border-color:color-mix(in srgb, var(--accent) 40%, transparent);background:color-mix(in srgb, var(--accent) 4%, transparent)}
-  .brutto-dual input.computed{opacity:.6;cursor:default}
-  .brutto-dual .unit{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);pointer-events:none}
+/* Year/Period toolbar */
+.toolbar{background:var(--surface);border:1px solid var(--border);padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;position:relative;}
+.toolbar::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);}
+.toolbar-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.toolbar-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;}
+.tab-group{display:flex;gap:0;border:1px solid var(--border);}
+.tab-btn{background:transparent;border:none;border-right:1px solid var(--border);padding:6px 14px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);cursor:pointer;transition:all .2s;}
+.tab-btn:last-child{border-right:none;}
+.tab-btn.active{background:var(--accent-dim);color:var(--accent);}
+.tab-btn:hover:not(.active){color:var(--text);}
+.toolbar-info{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);margin-left:auto;}
+.fx-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--accent-dim);border:1px solid var(--border);padding:4px 10px;color:var(--accent-lt);}
 
-  /* ── Cards ── */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-  @media(max-width:640px){.grid{grid-template-columns:1fr}}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;transition:border-color .2s}
-  .card:hover{border-color:var(--border-hover)}
-  .card.full{grid-column:1/-1}
-  .card-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-  .card-label::after{content:'';flex:1;height:1px;background:var(--border)}
-  .field{margin-bottom:18px}
-  .field:last-child{margin-bottom:0}
-  label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px;font-family:'DM Mono',monospace;letter-spacing:.04em}
-  label .hint{display:block;font-size:10px;color:var(--muted-dim);margin-top:2px;line-height:1.4}
-  input[type="number"],select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:15px;padding:10px 14px;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;-webkit-appearance:none}
-  input[type="number"]:disabled{opacity:.35;cursor:not-allowed}
-  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6480' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
-  select option{background:var(--surface2);color:var(--text)}
-  input[type="number"]:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 8%, transparent)}
-  .input-wrap{position:relative}
-  .input-wrap .unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);pointer-events:none}
-  .input-wrap input{padding-right:54px}
-  .toggle-group{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden}
-  .toggle-group button{flex:1;padding:10px;background:none;border:none;color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;transition:all .2s;letter-spacing:.05em}
-  .toggle-group button.active{background:var(--accent);color:var(--btn-active-text);font-weight:500}
-  .inner-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:640px){.inner-grid{grid-template-columns:1fr}}
-  .section-divider{border:none;border-top:1px solid var(--border);margin:16px 0 14px}
-  .subsection-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-dim);margin-bottom:12px;margin-top:2px}
-  .kv-preview{background:color-mix(in srgb, var(--accent2) 5%, transparent);border:1px solid color-mix(in srgb, var(--accent2) 15%, transparent);border-radius:8px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2);margin-top:6px;display:none}
-  .kv-preview.visible{display:block}
+/* Card */
+.card{background:var(--surface);border:1px solid var(--border);padding:22px 24px;margin-bottom:14px;position:relative;transition:background .25s,border-color .25s;}
+.card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);}
+.card-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.card.full{grid-column:1/-1;}
 
-  .calc-btn{width:100%;padding:16px;background:var(--accent);color:var(--btn-active-text);border:none;border-radius:12px;font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:8px}
-  .calc-btn:hover{background:color-mix(in srgb, var(--accent) 120%, white);transform:translateY(-1px);box-shadow:0 8px 24px color-mix(in srgb, var(--accent) 20%, transparent)}
-  .calc-btn:active{transform:translateY(0)}
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:640px){.grid{grid-template-columns:1fr;}}
+.inner-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:580px){.inner-grid{grid-template-columns:1fr;}}
 
-  /* ── Hero: einfaches 2-Zeilen EUR-Layout ── */
-  .hero-simple-row{display:flex;align-items:center;gap:40px;padding:24px 0;flex-wrap:wrap}
-  .hero-simple-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);min-width:170px;flex-shrink:0}
-  .hero-simple-vals{display:flex;align-items:flex-start;gap:0;flex:1}
-  .hero-simple-sep{width:1px;background:var(--border);align-self:stretch;margin:2px 36px}
-  .hero-simple-period{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-dim);margin-bottom:4px}
-  .hero-simple-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;align-self:center;text-align:right}
-  .hero-divider{height:1px;background:var(--border)}
-  @media(max-width:600px){
-    .hero-simple-row{gap:20px}
-    .hero-simple-label{min-width:auto;width:100%}
-    .hero-simple-sep{margin:2px 20px}
-  }
+/* Form */
+.field{margin-bottom:14px;}
+.field:last-child{margin-bottom:0;}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;}
+.field label .hint{display:block;font-size:9px;letter-spacing:.5px;text-transform:none;color:var(--text-muted);opacity:.7;margin-top:2px;line-height:1.4;}
+select,input[type="number"]{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:7px 9px;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;}
+select:focus,input:focus{border-color:var(--accent);}
+input[type="number"]{-moz-appearance:textfield;appearance:textfield;}
+input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;}
+input:disabled{opacity:.35;cursor:not-allowed;}
+.wrap{position:relative;}
+.wrap input{padding-right:36px;}
+.sfx{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);pointer-events:none;}
 
-  .results{display:none}
-  .results.visible{display:block}
+/* Subsection label */
+.sub-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);opacity:.6;margin:14px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
 
-  /* Hero: 2×2 grid (CHF/EUR × Mt./J.) */
-  .result-hero{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:20px;position:relative;overflow:hidden}
-  .result-hero::before{content:'';position:absolute;top:0;right:0;width:260px;height:260px;background:radial-gradient(circle,color-mix(in srgb, var(--accent) 5%, transparent) 0%,transparent 70%);pointer-events:none}
-  .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
-  @media(max-width:540px){.hero-grid{grid-template-columns:1fr}}
-  .hero-col{padding:8px 0}
-  .hero-col:first-child{padding-right:24px;border-right:1px solid var(--border)}
-  .hero-col:last-child{padding-left:24px}
-  .hero-period-header{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-  .hero-period-header span{color:var(--accent);margin-left:6px}
-  .hero-item{margin-bottom:16px}
-  .hero-item:last-child{margin-bottom:0}
-  .hero-item-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-  .hero-item-value{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,36px);font-weight:700;color:var(--accent);letter-spacing:-.02em;line-height:1.1}
-  .hero-item-value.eur{color:var(--accent2);font-size:clamp(18px,3vw,28px)}
-  .hero-item-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px}
+/* Toggle group */
+.toggle-group{display:flex;gap:0;border:1px solid var(--border);}
+.toggle-group button{flex:1;padding:7px 10px;background:transparent;border:none;border-right:1px solid var(--border);color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all .2s;}
+.toggle-group button:last-child{border-right:none;}
+.toggle-group button.active{background:var(--accent-dim);color:var(--accent);}
 
-  /* Breakdown: dual-value rows */
-  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
-  @media(max-width:500px){.result-grid{grid-template-columns:1fr}}
-  .breakdown-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px}
-  .breakdown-card h3{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0;padding-bottom:10px;border-bottom:1px solid var(--border)}
-  /* Column headers for Monat / Jahr */
-  .col-headers{display:grid;grid-template-columns:1fr 88px 88px;gap:4px;padding:6px 0 4px;border-bottom:1px solid rgba(42,46,43,.6);margin-bottom:2px}
-  .col-headers span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-dim);text-align:right}
-  .col-headers span:first-child{text-align:left}
-  .breakdown-row{display:grid;grid-template-columns:1fr 88px 88px;gap:4px;align-items:flex-start;padding:6px 0;border-bottom:1px solid rgba(42,46,43,.4)}
-  .breakdown-row:last-child{border-bottom:none}
-  .breakdown-row .name{color:var(--muted);font-size:11px}
-  .breakdown-row .sub-note{font-size:9px;color:var(--muted-dim);display:block;margin-top:1px}
-  .breakdown-row .val{font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap;text-align:right}
-  .breakdown-row .val.neg{color:#f07070}
-  .breakdown-row .val.pos{color:var(--accent2)}
-  .breakdown-row .val.tax{color:var(--de-gold)}
-  .breakdown-row .val.dim{color:var(--muted-dim)}
-  .breakdown-row.total{border-top:1px solid var(--border);margin-top:2px;padding-top:8px}
-  .breakdown-row.total .name{color:var(--text);font-weight:500}
-  .breakdown-row.total .val{color:var(--accent);font-weight:500}
+/* Brutto dual */
+.brutto-dual{display:grid;grid-template-columns:1fr 24px 1fr;align-items:end;gap:6px;}
+.brutto-arrow{display:flex;align-items:center;justify-content:center;padding-bottom:8px;color:var(--text-muted);font-size:11px;font-family:'IBM Plex Mono',monospace;}
+.brutto-dual input.active-input{border-color:var(--accent);}
+.brutto-dual input.computed{opacity:.6;}
 
-  .bar-visual{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;grid-column:1/-1}
-  .bar-visual h3{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
-  .bar-track{height:48px;border-radius:8px;overflow:hidden;display:flex;margin-bottom:16px}
-  .bar-segment{height:100%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;overflow:hidden;white-space:nowrap}
-  .bar-legend{display:flex;flex-wrap:wrap;gap:10px 18px}
-  .legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
-  .legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
-  .info-box{background:color-mix(in srgb, var(--accent) 4%, transparent);border:1px solid color-mix(in srgb, var(--accent) 12%, transparent);border-radius:12px;padding:18px 20px;font-size:12px;color:var(--muted);line-height:1.8;font-family:'DM Mono',monospace;grid-column:1/-1}
-  .info-box strong{color:var(--accent);font-weight:500}
-  .section-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:32px 0 16px;display:flex;align-items:center;gap:12px}
-  .section-title::before{content:'//';color:var(--accent)}
-  .disclaimer{margin-top:32px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:11px;color:var(--muted);line-height:1.7;font-family:'DM Mono',monospace;text-align:center}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-  .results.visible>*{animation:fadeUp .35s ease forwards}
-  .results.visible>*:nth-child(2){animation-delay:.05s}
-  /* ── Feedback ── */
-  .feedback-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-top:24px}
-  .feedback-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
-  .feedback-icon{font-size:24px;line-height:1;flex-shrink:0;margin-top:2px}
-  .feedback-title{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text);font-weight:500;margin-bottom:4px}
-  .feedback-sub{font-size:13px;color:var(--muted)}
-  .feedback-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;resize:vertical;outline:none;transition:border-color .2s;line-height:1.6}
-  .feedback-textarea:focus{border-color:var(--accent)}
-  .feedback-textarea::placeholder{color:var(--muted)}
-  .feedback-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
-  .feedback-chars{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted-dim)}
-  .feedback-btn{background:var(--accent);color:var(--btn-active-text);border:none;border-radius:8px;padding:10px 22px;font-family:'DM Mono',monospace;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s}
-  .feedback-btn:hover{opacity:.85}
-  .feedback-thankyou{margin-top:12px;font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.04em}
+/* Info preview */
+.info-preview{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:6px 9px;background:var(--accent-dim);border-left:2px solid var(--accent);color:var(--accent-lt);line-height:1.5;margin-top:6px;}
 
+/* Calc button */
+.calc-btn{width:100%;padding:12px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:4px;}
+.calc-btn:hover{background:var(--accent-dim);}
+
+/* Results */
+.results{display:none;}
+.results.visible{display:block;}
+
+/* Hero result */
+.accent-card{background:var(--surface);border:1px solid var(--accent);padding:24px 28px;margin-bottom:14px;}
+.hero-row{display:flex;align-items:center;gap:32px;padding:14px 0;flex-wrap:wrap;}
+.hero-row+.hero-row{border-top:1px solid var(--border);}
+.hero-row-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);min-width:160px;flex-shrink:0;}
+.hero-vals{display:flex;align-items:flex-start;gap:0;flex:1;}
+.hero-sep{width:1px;background:var(--border);align-self:stretch;margin:2px 28px;}
+.hero-period{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+.hero-amount{font-family:'Playfair Display',serif;font-size:clamp(20px,3.5vw,34px);font-weight:600;color:var(--accent-lt);line-height:1.1;}
+.hero-amount.main{color:var(--accent-lt);font-size:clamp(22px,4vw,38px);}
+.hero-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:3px;}
+
+/* Breakdown */
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+@media(max-width:580px){.result-grid{grid-template-columns:1fr;}}
+.breakdown-card{background:var(--surface);border:1px solid var(--border);padding:20px 22px;position:relative;}
+.breakdown-card::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:var(--border);}
+.breakdown-card h3{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.col-headers{display:grid;grid-template-columns:1fr 80px 80px;gap:4px;padding:0 0 5px;border-bottom:1px solid var(--border);margin-bottom:4px;}
+.col-headers span{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:right;}
+.col-headers span:first-child{text-align:left;}
+.breakdown-row{display:grid;grid-template-columns:1fr 80px 80px;gap:4px;align-items:start;padding:5px 0;border-bottom:1px solid var(--border);}
+.breakdown-row:last-child{border-bottom:none;}
+.breakdown-row .name{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);}
+.breakdown-row .sub-note{font-size:8px;color:var(--text-muted);opacity:.6;display:block;margin-top:2px;line-height:1.3;}
+.breakdown-row .val{font-family:'IBM Plex Mono',monospace;font-size:10px;white-space:nowrap;text-align:right;}
+.breakdown-row .val.neg{color:#e07070;}
+.breakdown-row .val.pos{color:var(--accent-lt);}
+.breakdown-row .val.tax{color:#c4a93a;}
+.breakdown-row .val.dim{opacity:.6;}
+.breakdown-row.total{border-top:1px solid var(--border);margin-top:2px;padding-top:8px;}
+.breakdown-row.total .name{color:var(--text);}
+.breakdown-row.total .val{color:var(--accent-lt);}
+
+/* Bar chart */
+.bar-card{background:var(--surface);border:1px solid var(--border);padding:20px 22px;margin-bottom:14px;grid-column:1/-1;}
+.bar-track{height:36px;display:flex;overflow:hidden;border:1px solid var(--border);margin:12px 0;}
+.bar-segment{height:100%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;overflow:hidden;white-space:nowrap;}
+.bar-legend{display:flex;flex-wrap:wrap;gap:8px 16px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
+.legend-dot{width:8px;height:8px;flex-shrink:0;}
+
+/* Info box */
+.info-card{background:var(--surface);border:1px solid var(--border);padding:20px 22px;margin-bottom:14px;grid-column:1/-1;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);line-height:1.8;}
+.info-card strong{color:var(--accent-lt);}
+
+.note{font-size:10px;color:var(--text-muted);margin-top:14px;line-height:1.7;font-family:'IBM Plex Mono',monospace;}
+
+footer{text-align:center;padding:32px 0 24px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);opacity:0.6;}
+
+@media(max-width:680px){
+  .card,.accent-card,.breakdown-card{padding:16px 14px;}
+  .hero-row{gap:16px;}
+  .hero-sep{margin:2px 16px;}
+}
 </style>
 </head>
 <body>
+
+<div class="theme-toggle">
+  <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')" title="Dunkel">
+    <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button class="theme-btn" id="btn-system" onclick="setTheme('system')" title="System">
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+  </button>
+  <button class="theme-btn" id="btn-light" onclick="setTheme('light')" title="Hell">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+</div>
+
 <div class="container">
 
   <header>
-    <div class="header-banner">
-      <img class="header-banner-logo"
-           src="https://www.steuerberater-weilamrhein.com/wp-content/uploads/2021/11/meier-kroehnke-partner-steuerberatung-weil-am-rhein-logo-02.png"
-           alt="Meier + Kröhnke Steuerberatung"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="header-banner-logo-fallback">M+K</div>
-      <div class="header-banner-divider"></div>
-      <div class="header-banner-text">
-        <div class="header-banner-title">Brutto-Netto-Rechner Grenzgänger</div>
-        <div class="header-banner-sub">Wohnsitz DE · Arbeitsort CH · Deutsche Einkommensteuer · Stand 2025/2026</div>
-      </div>
-      <div class="theme-toggle" style="flex-shrink:0">
-        <button class="theme-btn" id="theme-light" onclick="setTheme('light')" title="Hell">☀️</button>
-        <button class="theme-btn active" id="theme-system" onclick="setTheme('system')" title="System">⚙️</button>
-        <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')" title="Dunkel">🌙</button>
-      </div>
-    </div>
+    <div class="badge">Art. 15a DBA CH-DE &middot; § 32a EStG</div>
+    <h1><span>Grenzgänger</span>-Netto</h1>
+    <p class="subtitle">Wohnsitz DE &middot; Arbeitsort CH &middot; Deutsche Einkommensteuer &middot; Stand 2025/2026</p>
   </header>
 
-  <!-- ── Top-Banner: Jahr + Eingabe-Periode ── -->
-  <div class="top-banner">
-    <div class="banner-group">
-      <span class="banner-label">Steuerjahr</span>
-      <div class="pill-group" id="year-selector"></div>
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="toolbar-group">
+      <span class="toolbar-label">Steuerjahr</span>
+      <div class="tab-group" id="year-selector"></div>
     </div>
-    <div class="banner-sep"></div>
-    <div class="banner-group">
-      <span class="banner-label">Eingabe in</span>
-      <div class="pill-group">
-        <button class="pill-btn active" id="btn-monthly" onclick="setPeriod('monthly')">Monatswerte</button>
-        <button class="pill-btn" id="btn-yearly" onclick="setPeriod('yearly')">Jahreswerte</button>
+    <div class="toolbar-group">
+      <span class="toolbar-label">Eingabe</span>
+      <div class="tab-group">
+        <button class="tab-btn active" id="btn-monthly" onclick="setPeriod('monthly')">Monat</button>
+        <button class="tab-btn" id="btn-yearly" onclick="setPeriod('yearly')">Jahr</button>
       </div>
     </div>
-    <div class="banner-info" id="year-info"></div>
-    <div style="margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;background:color-mix(in srgb, var(--accent) 7%, transparent);border:1px solid color-mix(in srgb, var(--accent) 20%, transparent);border-radius:8px;padding:5px 12px;color:var(--accent)" id="fx-badge">Kurs wird geladen…</div>
+    <div class="toolbar-info" id="year-info"></div>
+    <div class="fx-badge" id="fx-badge">Kurs wird geladen…</div>
   </div>
 
   <div class="grid">
 
     <!-- Einkommen -->
     <div class="card">
-      <div class="card-label">Einkommen</div>
-
-      <!-- Dual Brutto Input -->
+      <div class="card-title">Einkommen</div>
       <div class="field">
+        <label>Bruttolohn CHF</label>
         <div class="brutto-dual">
-          <div class="input-block">
-            <label id="lbl-brutto-m" class="active-period">Brutto / Monat</label>
-            <div class="input-wrap">
+          <div>
+            <label id="lbl-brutto-m" style="font-size:8px;letter-spacing:1px;">/ Monat</label>
+            <div class="wrap">
               <input type="number" id="brutto-m" value="6000" min="0" step="100" class="active-input" oninput="syncBrutto('m')">
-              <span class="unit">CHF</span>
+              <span class="sfx">CHF</span>
             </div>
           </div>
-          <div class="sep-arrow">⇄</div>
-          <div class="input-block">
-            <label id="lbl-brutto-j">Brutto / Jahr</label>
-            <div class="input-wrap">
+          <div class="brutto-arrow">⇄</div>
+          <div>
+            <label id="lbl-brutto-j" style="font-size:8px;letter-spacing:1px;">/ Jahr</label>
+            <div class="wrap">
               <input type="number" id="brutto-j" value="72000" min="0" step="1200" class="computed" oninput="syncBrutto('j')">
-              <span class="unit">CHF</span>
+              <span class="sfx">CHF</span>
             </div>
           </div>
         </div>
       </div>
-
     </div>
 
-    <!-- Persönliche Angaben -->
+    <!-- Persönlich -->
     <div class="card">
-      <div class="card-label">Persönliche Angaben</div>
+      <div class="card-title">Persönliche Angaben</div>
       <div class="field">
         <label>Kirchensteuer</label>
         <div class="toggle-group">
@@ -279,111 +243,104 @@
         </div>
       </div>
       <div class="field">
-        <label>Alter <span class="hint">Bestimmt BVG-Sparrate und SWICA-Prämie</span></label>
-        <div class="input-wrap">
-          <input type="number" id="alter" value="30" min="18" max="70" oninput="onAlterChange()">
-          <span class="unit">J.</span>
-        </div>
+        <label>Alter<span class="hint">Bestimmt BVG-Sparrate und SWICA-Prämie</span></label>
+        <div class="wrap"><input type="number" id="alter" value="30" min="18" max="70" oninput="onAlterChange()"><span class="sfx">J.</span></div>
       </div>
     </div>
 
-    <!-- CH-SV AN -->
+    <!-- CH-SV -->
     <div class="card">
-      <div class="card-label">CH Sozialversicherung – Arbeitnehmer</div>
-      <div class="subsection-label">Gesetzlich fixiert (jahresabhängig)</div>
+      <div class="card-title">CH Sozialversicherung – AN</div>
+      <div class="sub-label">Gesetzlich fixiert (jahresabhängig)</div>
       <div class="inner-grid">
         <div class="field">
-          <label>AHV / IV / EO <span class="hint" id="ahv-hint"></span></label>
-          <div class="input-wrap"><input type="number" id="ahv-display" disabled><span class="unit">%</span></div>
+          <label>AHV / IV / EO<span class="hint" id="ahv-hint"></span></label>
+          <div class="wrap"><input type="number" id="ahv-display" disabled><span class="sfx">%</span></div>
         </div>
         <div class="field">
-          <label>ALV <span class="hint" id="alv-hint"></span></label>
-          <div class="input-wrap"><input type="number" id="alv-display" disabled><span class="unit">%</span></div>
+          <label>ALV<span class="hint" id="alv-hint"></span></label>
+          <div class="wrap"><input type="number" id="alv-display" disabled><span class="sfx">%</span></div>
         </div>
       </div>
       <div class="field">
-        <label>KTG AN (Krankentaggeld) <span class="hint">AN-Anteil Prämie, branchenabhängig – 0 falls vom AG getragen</span></label>
-        <div class="input-wrap"><input type="number" id="ktg-an" value="0" step="0.05" min="0" max="3"><span class="unit">%</span></div>
+        <label>KTG AN<span class="hint">AN-Anteil Prämie, branchenabhängig</span></label>
+        <div class="wrap"><input type="number" id="ktg-an" value="0" step="0.05" min="0" max="3"><span class="sfx">%</span></div>
       </div>
       <div class="field">
-        <label>NBUV AN (Nicht-Berufsunfall) <span class="hint">Typisch 0.5–1.5 %, branchenabhängig – 50 % aller NBUV-Prämien als WK absetzbar</span></label>
-        <div class="input-wrap"><input type="number" id="nbuv-an" value="0" step="0.05" min="0" max="3"><span class="unit">%</span></div>
+        <label>NBUV AN<span class="hint">50 % der Gesamtprämie (AN+AG) als WK absetzbar</span></label>
+        <div class="wrap"><input type="number" id="nbuv-an" value="0" step="0.05" min="0" max="3"><span class="sfx">%</span></div>
       </div>
-      <hr class="section-divider">
-      <div class="subsection-label">BVG Pensionskasse</div>
+      <div class="sub-label">BVG Pensionskasse</div>
       <div class="field">
-        <label>BVG AN-Beitrag (Spar + Risiko) <span class="hint" id="bvg-hint"></span></label>
-        <div class="input-wrap"><input type="number" id="bvg-display" disabled placeholder="→ aus Alter"><span class="unit">%</span></div>
+        <label>BVG AN-Beitrag<span class="hint" id="bvg-hint"></span></label>
+        <div class="wrap"><input type="number" id="bvg-display" disabled placeholder="aus Alter"><span class="sfx">%</span></div>
       </div>
     </div>
 
     <!-- AG-Beiträge -->
     <div class="card">
-      <div class="card-label">AG-Beiträge (steuerpflichtig in DE)</div>
-      <div class="subsection-label">Krankentaggeldversicherung (KTG)</div>
+      <div class="card-title">AG-Beiträge (steuerpflichtig)</div>
+      <div class="sub-label">Krankentaggeld (KTG)</div>
       <div class="field">
-        <label>AG-Anteil KTG / Monat <span class="hint">Geldwerter Vorteil → erhöht maßgebenden Lohn. 0 eingeben falls nicht bekannt.</span></label>
-        <div class="input-wrap"><input type="number" id="ktg-ag" value="0" step="1" min="0"><span class="unit">CHF</span></div>
+        <label>AG-Anteil KTG / Monat<span class="hint">Geldwerter Vorteil → erhöht maßgebenden Lohn</span></label>
+        <div class="wrap"><input type="number" id="ktg-ag" value="0" step="1" min="0"><span class="sfx">CHF</span></div>
       </div>
-      <hr class="section-divider">
-      <div class="subsection-label">Nicht-Berufsunfall (NBUV) – AG-Anteil</div>
+      <div class="sub-label">Nicht-Berufsunfall (NBUV)</div>
       <div class="field">
-        <label>AG-Anteil NBUV / Monat <span class="hint">Geldwerter Vorteil → erhöht maßgebenden Lohn. 50 % der Gesamtprämie (AN+AG) als WK absetzbar.</span></label>
-        <div class="input-wrap"><input type="number" id="nbuv-ag" value="0" step="1" min="0"><span class="unit">CHF</span></div>
+        <label>AG-Anteil NBUV / Monat<span class="hint">Geldwerter Vorteil → 50 % der Gesamtprämie als WK</span></label>
+        <div class="wrap"><input type="number" id="nbuv-ag" value="0" step="1" min="0"><span class="sfx">CHF</span></div>
       </div>
     </div>
 
     <!-- KV & Pendler -->
     <div class="card full">
-      <div class="card-label">Krankenversicherung &amp; Pendler</div>
+      <div class="card-title">Krankenversicherung &amp; Werbungskosten</div>
       <div class="inner-grid">
         <div>
-          <div class="subsection-label">SWICA Grenzgänger-KV (Standard EU / Euroline Plus)</div>
+          <div class="sub-label">SWICA Grenzgänger-KV</div>
           <div class="field">
-            <label>Monatsprämie KV <span class="hint">Vorausgefüllt: SWICA-Tarif nach Jahr &amp; Alter (BAG-Liste, ohne Unfall). Überschreiben möglich.</span></label>
-            <div class="input-wrap"><input type="number" id="kv-praemie" step="1" min="0" oninput="clearKvNote()"><span class="unit">CHF</span></div>
-            <div class="kv-preview" id="kv-preview"></div>
+            <label>Monatsprämie<span class="hint">Vorausgefüllt: SWICA-Tarif nach Jahr &amp; Alter (BAG-Liste, ohne Unfall)</span></label>
+            <div class="wrap"><input type="number" id="kv-praemie" step="1" min="0" oninput="clearKvNote()"><span class="sfx">CHF</span></div>
+            <div class="info-preview" id="kv-preview" style="display:none;"></div>
           </div>
           <div class="field">
-            <label>KV-Abzug für Netto-EUR-Berechnung</label>
+            <label>KV-Abzug für Netto-EUR</label>
             <div class="toggle-group">
-              <button id="btn-kv-chf" class="active" onclick="setKvMode('chf')">CHF → EUR umrechnen</button>
-              <button id="btn-kv-eur" onclick="setKvMode('eur')">Eigener EUR-Betrag</button>
+              <button id="btn-kv-chf" class="active" onclick="setKvMode('chf')">CHF→EUR</button>
+              <button id="btn-kv-eur" onclick="setKvMode('eur')">Eigener EUR</button>
             </div>
           </div>
-          <div class="field" id="kv-eur-wrap" style="display:none">
-            <label>Monatsprämie KV (EUR)</label>
-            <div class="input-wrap"><input type="number" id="kv-praemie-eur" step="1" min="0" placeholder="z.B. 230"><span class="unit">EUR</span></div>
+          <div class="field" id="kv-eur-wrap" style="display:none;">
+            <label>Monatsprämie EUR</label>
+            <div class="wrap"><input type="number" id="kv-praemie-eur" step="1" min="0" placeholder="z.B. 230"><span class="sfx">EUR</span></div>
           </div>
         </div>
         <div>
-          <div class="subsection-label">Homeoffice (DE)</div>
+          <div class="sub-label">Homeoffice (DE)</div>
           <div class="field">
-            <label>Homeoffice-Tage / Jahr <span class="hint">6 €/Tag, max. 210 Tage = max. 1.260 €/J. (§4 Abs.5 Nr.6c EStG, seit 2023 entfristet)</span></label>
-            <div class="input-wrap"><input type="number" id="ho-tage" value="0" min="0" max="210" oninput="onHoTageChange()"><span class="unit">Tage</span></div>
+            <label>Homeoffice-Tage / Jahr<span class="hint">6 €/Tag, max. 210 Tage = max. 1.260 €/J. (§4 Abs.5 Nr.6c EStG)</span></label>
+            <div class="wrap"><input type="number" id="ho-tage" value="0" min="0" max="210" oninput="onHoTageChange()"><span class="sfx">Tage</span></div>
           </div>
-          <hr class="section-divider">
-          <div class="subsection-label">Pendlerpauschale (DE)</div>
+          <div class="sub-label">Pendlerpauschale (DE)</div>
           <div class="field">
-            <label>Pendlerpauschale einrechnen?</label>
+            <label>Pendlerpauschale</label>
             <div class="toggle-group">
               <button id="btn-pend-ja" class="active" onclick="setPendler(true)">Ja</button>
               <button id="btn-pend-nein" onclick="setPendler(false)">Nein</button>
             </div>
           </div>
-          <div class="field" id="pendler-km-wrap">
-            <label>Arbeitsweg – einfach <span class="hint" id="pendler-hint"></span></label>
-            <div class="input-wrap"><input type="number" id="pendler-km" value="10" min="0" max="300"><span class="unit">km</span></div>
+          <div id="pendler-km-wrap" class="field">
+            <label>Arbeitsweg einfach<span class="hint" id="pendler-hint"></span></label>
+            <div class="wrap"><input type="number" id="pendler-km" value="10" min="0" max="300"><span class="sfx">km</span></div>
           </div>
-          <div class="field" id="pendler-tage-wrap">
-            <label>Pendel-Arbeitstage / Jahr <span class="hint">= Arbeitstage gesamt − Homeoffice-Tage</span></label>
-            <div class="input-wrap"><input type="number" id="pendler-tage" value="240" min="0" max="365"><span class="unit">Tage</span></div>
+          <div id="pendler-tage-wrap" class="field">
+            <label>Pendel-Arbeitstage / Jahr<span class="hint">= Arbeitstage gesamt − Homeoffice-Tage</span></label>
+            <div class="wrap"><input type="number" id="pendler-tage" value="240" min="0" max="365"><span class="sfx">Tage</span></div>
           </div>
-          <hr class="section-divider">
-          <div class="subsection-label">Weitere Werbungskosten (DE)</div>
+          <div class="sub-label">Weitere Werbungskosten</div>
           <div class="field">
-            <label>Weitere WK / Jahr <span class="hint">z.B. Arbeitsmittel, Fachliteratur, Gewerkschaft, Fortbildung. Addiert zu Pendlerpauschale + NBUV-WK.</span></label>
-            <div class="input-wrap"><input type="number" id="weitere-wk" value="0" step="50" min="0"><span class="unit">EUR</span></div>
+            <label>Weitere WK / Jahr<span class="hint">Arbeitsmittel, Fachliteratur, Gewerkschaft, Fortbildung</span></label>
+            <div class="wrap"><input type="number" id="weitere-wk" value="0" step="50" min="0"><span class="sfx">EUR</span></div>
           </div>
         </div>
       </div>
@@ -391,379 +348,211 @@
 
   </div><!-- /grid -->
 
-  <button class="calc-btn" onclick="calculate()">Berechnung starten →</button>
+  <button class="calc-btn" onclick="calculate()">Berechnung starten</button>
 
-  <!-- ── ERGEBNISSE ── -->
+  <!-- Ergebnisse -->
   <div class="results" id="results">
-    <p class="section-title">Ergebnis</p>
+    <div style="margin-top:24px;margin-bottom:8px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);">// Ergebnis</div>
 
-    <!-- Hero: 2 Zeilen, nur EUR, je Monat + Jahr -->
-    <div class="result-hero">
-
-      <div class="hero-simple-row">
-        <div class="hero-simple-label">Bruttolohn EUR</div>
-        <div class="hero-simple-vals">
+    <div class="accent-card">
+      <div class="hero-row">
+        <div class="hero-row-label">Bruttolohn EUR</div>
+        <div class="hero-vals">
           <div>
-            <div class="hero-simple-period">/ Monat</div>
-            <div class="hero-item-value eur" id="r-brutto-eur-m">–</div>
+            <div class="hero-period">/ Monat</div>
+            <div class="hero-amount" id="r-brutto-eur-m">–</div>
           </div>
-          <div class="hero-simple-sep"></div>
+          <div class="hero-sep"></div>
           <div>
-            <div class="hero-simple-period">/ Jahr</div>
-            <div class="hero-item-value eur" id="r-brutto-eur-j">–</div>
+            <div class="hero-period">/ Jahr</div>
+            <div class="hero-amount" id="r-brutto-eur-j">–</div>
           </div>
         </div>
-        <div class="hero-simple-sub" id="r-sub-brutto-eur"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);margin-left:auto;" id="r-sub-brutto-eur"></div>
       </div>
-
-      <div class="hero-divider"></div>
-
-      <div class="hero-simple-row">
-        <div class="hero-simple-label" style="color:var(--accent)">✦ Echtes Netto EUR<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;text-transform:none;letter-spacing:0">nach CH-SV, Steuern &amp; KV</div></div>
-        <div class="hero-simple-vals">
+      <div class="hero-row">
+        <div class="hero-row-label" style="color:var(--accent-lt);">Echtes Netto EUR<div style="font-size:8px;color:var(--text-muted);margin-top:2px;font-weight:300;">nach CH-SV, Steuern &amp; KV</div></div>
+        <div class="hero-vals">
           <div>
-            <div class="hero-simple-period">/ Monat</div>
-            <div class="hero-item-value" style="color:#fff" id="r-echt-eur-m">–</div>
-            <div class="hero-item-sub" id="r-sub-echt-m"></div>
+            <div class="hero-period">/ Monat</div>
+            <div class="hero-amount main" id="r-echt-eur-m">–</div>
+            <div class="hero-sub" id="r-sub-echt-m"></div>
           </div>
-          <div class="hero-simple-sep"></div>
+          <div class="hero-sep"></div>
           <div>
-            <div class="hero-simple-period">/ Jahr</div>
-            <div class="hero-item-value" style="color:#fff" id="r-echt-eur-j">–</div>
-            <div class="hero-item-sub" id="r-sub-echt-j"></div>
+            <div class="hero-period">/ Jahr</div>
+            <div class="hero-amount main" id="r-echt-eur-j">–</div>
+            <div class="hero-sub" id="r-sub-echt-j"></div>
           </div>
         </div>
       </div>
-
     </div>
 
-    <!-- Breakdown cards -->
     <div class="result-grid">
       <div class="breakdown-card">
-        <h3>🇨🇭 CH – Abzüge Arbeitnehmer</h3>
+        <h3>CH – Abzüge Arbeitnehmer</h3>
         <div class="col-headers"><span>Position</span><span>/ Monat</span><span>/ Jahr</span></div>
         <div id="rows-ch"></div>
       </div>
       <div class="breakdown-card">
-        <h3>🇩🇪 DE – Einkommensteuer (Veranlagung)</h3>
+        <h3>DE – Einkommensteuer</h3>
         <div class="col-headers"><span>Position</span><span>/ Monat</span><span>/ Jahr</span></div>
         <div id="rows-de"></div>
       </div>
       <div class="breakdown-card">
-        <h3>⚙ Steuerpfl. AG-Beiträge</h3>
+        <h3>Steuerpfl. AG-Beiträge</h3>
         <div class="col-headers"><span>Position</span><span>/ Monat</span><span>/ Jahr</span></div>
         <div id="rows-ag"></div>
       </div>
       <div class="breakdown-card">
-        <h3>🏥 KV &amp; Verfügbares Einkommen</h3>
+        <h3>KV &amp; Verfügbares Einkommen</h3>
         <div class="col-headers"><span>Position</span><span>/ Monat</span><span>/ Jahr</span></div>
         <div id="rows-kv"></div>
       </div>
-      <div class="bar-visual">
-        <h3>Bruttoaufteilung (Basis: maßgebender Lohn / Monat)</h3>
+      <div class="bar-card">
+        <div class="card-title" style="margin-bottom:0;">Bruttoaufteilung</div>
         <div class="bar-track" id="bar-track"></div>
         <div class="bar-legend" id="bar-legend"></div>
       </div>
-      <div class="info-box" id="info-box"></div>
+      <div class="info-card" id="info-box"></div>
     </div>
+
+    <p class="note">
+      ⚠ Schätzung – kein Ersatz für Steuerberatung. Art. 15a DBA CH-DE. CH-QST 4,5 % auf Brutto.
+      SWICA-Prämien: offizielle BAG-Prämienliste. ESt-Formel § 32a EStG.<br>
+      Wechselkurse: 2024: 100 CHF = 104,50 EUR · 2025: 100 CHF = 106,50 EUR (Anlage N-Gre, Finanzämter BW/BMF) · Aktuell: EZB-Tageskurs.
+    </p>
   </div>
 
-  <div class="disclaimer">
-    ⚠ Schätzung – kein Ersatz für Steuerberatung. Art. 15a DBA CH-DE. CH-QST 4,5 % auf Brutto.
-    SWICA-Prämien: offizielle BAG-Prämienliste (Standard EU / Euroline Plus, ohne Unfall). ESt-Formel § 32a EStG.<br>
-    <strong style="color:var(--accent)">Wechselkurse:</strong>
-    2024: 100 CHF = 104,50 EUR · 2025: 100 CHF = 106,50 EUR (Anlage N-Gre, Finanzämter BW/BMF) ·
-    Aktuell: EZB-Tageskurs via Frankfurter.app · EUR/CHF-Kurs: 1 EUR kauft CHF → Kehrwert = EUR je CHF.
-  </div>
+</div><!-- /container -->
 
-
-</div>
+<footer>&copy; 2025 Robin Glowania &middot; Kein Rechtsanspruch</footer>
 
 <script>
-// ============================================================
-//  THEME
-// ============================================================
-function setTheme(mode){
-  const root = document.documentElement;
-  if(mode==='light')      root.setAttribute('data-theme','light');
-  else if(mode==='dark')  root.setAttribute('data-theme','dark');
-  else                    root.removeAttribute('data-theme');
-  ['light','system','dark'].forEach(m=>{
-    document.getElementById('theme-'+m).classList.toggle('active', m===mode);
-  });
-  localStorage.setItem('gg-theme', mode);
+// ── Theme ──────────────────────────────────────────────────────
+function setTheme(t){
+  if(t==='system') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme',t);
+  try{localStorage.setItem('g-theme',t);}catch(e){}
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('btn-'+t);
+  if(btn)btn.classList.add('active');
 }
 (function(){
-  const saved = localStorage.getItem('gg-theme')||'system';
+  const saved=localStorage.getItem('g-theme')||'system';
   setTheme(saved);
 })();
 
-// ============================================================
-//  HOMEOFFICE
-// ============================================================
-const TOTAL_ARBEITSTAGE = 240; // Basis für Pendler-Default
-
-function onHoTageChange(){
-  const ho = Math.min(parseInt(document.getElementById('ho-tage').value)||0, 210);
-  const pendler = Math.max(0, TOTAL_ARBEITSTAGE - ho);
-  const pTageEl = document.getElementById('pendler-tage');
-  if(!pTageEl._edited) pTageEl.value = pendler;
-}
-
-
-
-const PARAMS = {
-  2024:{
-    ahvRate:0.0535, alvRate:0.011, bvgKoordAbzugJ:25725,
-    grundfreibetrag:11604,
-    z1_top:17005, z2_top:66760, z3_top:277825,
-    a1:979.18,b1:1400, a2:192.59,b2:2397,c2:966.53,
-    flat3:0.42,k3:9336.45, flat4:0.45,k4:17671.20,
-    soliFreigrenze:17543,soliFaktor:0.055,soliGleitzone_start:920,
-    kstRate:0.08, entlastungsbetrag:4260, wkPauschale:1230,
-    // SA §10 Abs.3: Höchstbetrag Altersvorsorge (Ledige); Verheiratete = ×2
-    saAlterHoechstLedig:27566,
-    // SA §10 Abs.1 Nr.3a: sonstige Vorsorge (ALV, KTG etc.) – max mit AG-KV-Zuschuss
-    saSonstigeMax:1900,
-    swicaKV:{u18:50.90, u25:158.90, ab26:211.80},
-  },
-  2025:{
-    ahvRate:0.0535, alvRate:0.011, bvgKoordAbzugJ:25725,
-    grundfreibetrag:12096,
-    z1_top:17430, z2_top:68430, z3_top:277825,
-    a1:979.18,b1:1400, a2:192.59,b2:2397,c2:1025.38,
-    flat3:0.42,k3:9972.98, flat4:0.45,k4:18307.73,
-    soliFreigrenze:18130,soliFaktor:0.055,soliGleitzone_start:972,
-    kstRate:0.08, entlastungsbetrag:4260, wkPauschale:1230,
-    saAlterHoechstLedig:29344,
-    saSonstigeMax:1900,
-    swicaKV:{u18:59.20, u25:184.70, ab26:246.30},
-  },
-  2026:{
-    ahvRate:0.0535, alvRate:0.011, bvgKoordAbzugJ:25725,
-    grundfreibetrag:12648,
-    z1_top:17901, z2_top:70543, z3_top:277825,
-    a1:979.18,b1:1400, a2:192.59,b2:2397,c2:1091.56,
-    flat3:0.42,k3:10638.05, flat4:0.45,k4:18961.49,
-    soliFreigrenze:18693,soliFaktor:0.055,soliGleitzone_start:1024,
-    kstRate:0.08, entlastungsbetrag:4260, wkPauschale:1230,
-    saAlterHoechstLedig:30826,
-    saSonstigeMax:1900,
-    swicaKV:{u18:58.10, u25:181.40, ab26:241.80},
-  }
+// ── Daten ──────────────────────────────────────────────────────
+const PARAMS={
+  2024:{ahvRate:0.0535,alvRate:0.011,bvgKoordAbzugJ:25725,grundfreibetrag:11604,z1_top:17005,z2_top:66760,z3_top:277825,a1:979.18,b1:1400,a2:192.59,b2:2397,c2:966.53,flat3:0.42,k3:9336.45,flat4:0.45,k4:17671.20,soliFreigrenze:17543,soliFaktor:0.055,soliGleitzone_start:920,kstRate:0.08,entlastungsbetrag:4260,wkPauschale:1230,saAlterHoechstLedig:27566,saSonstigeMax:1900,swicaKV:{u18:50.90,u25:158.90,ab26:211.80}},
+  2025:{ahvRate:0.0535,alvRate:0.011,bvgKoordAbzugJ:25725,grundfreibetrag:12096,z1_top:17430,z2_top:68430,z3_top:277825,a1:979.18,b1:1400,a2:192.59,b2:2397,c2:1025.38,flat3:0.42,k3:9972.98,flat4:0.45,k4:18307.73,soliFreigrenze:18130,soliFaktor:0.055,soliGleitzone_start:972,kstRate:0.08,entlastungsbetrag:4260,wkPauschale:1230,saAlterHoechstLedig:29344,saSonstigeMax:1900,swicaKV:{u18:59.20,u25:184.70,ab26:246.30}},
+  2026:{ahvRate:0.0535,alvRate:0.011,bvgKoordAbzugJ:25725,grundfreibetrag:12648,z1_top:17901,z2_top:70543,z3_top:277825,a1:979.18,b1:1400,a2:192.59,b2:2397,c2:1091.56,flat3:0.42,k3:10638.05,flat4:0.45,k4:18961.49,soliFreigrenze:18693,soliFaktor:0.055,soliGleitzone_start:1024,kstRate:0.08,entlastungsbetrag:4260,wkPauschale:1230,saAlterHoechstLedig:30826,saSonstigeMax:1900,swicaKV:{u18:58.10,u25:181.40,ab26:241.80}}
 };
 
-function bvgSparRateAN(alter){
-  if(alter<25)return 0;
-  if(alter<35)return 0.035;
-  if(alter<45)return 0.05;
-  if(alter<55)return 0.075;
-  return 0.09;
+const FX_ANNUAL={2024:{rate:1.045,label:'100 CHF = 104,50 EUR',src:'Anlage N-Gre 2024'},2025:{rate:1.065,label:'100 CHF = 106,50 EUR',src:'Anlage N-Gre 2025'}};
+let liveRate=null,liveFetched=false;
+
+async function fetchLiveRate(){
+  try{
+    const r=await fetch('https://api.frankfurter.app/latest?from=CHF&to=EUR');
+    const d=await r.json();
+    liveRate=d.rates.EUR;liveFetched=true;updateFxBadge();
+  }catch(e){
+    try{
+      const r2=await fetch('https://data-api.ecb.europa.eu/service/data/EXR/D.CHF.EUR.SP00.A?lastNObservations=1&detail=dataonly&format=jsondata');
+      const d2=await r2.json();
+      const eurChf=d2.dataSets[0].series['0:0:0:0:0'].observations['0'][0];
+      liveRate=1/eurChf;liveFetched=true;updateFxBadge();
+    }catch(e2){liveRate=null;liveFetched=true;updateFxBadge();}
+  }
 }
+
+function getCHF_EUR(){const fx=FX_ANNUAL[selectedYear];if(fx)return fx.rate;return liveRate!==null?liveRate:1.09;}
+function getFxLabel(){const fx=FX_ANNUAL[selectedYear];if(fx)return`${fx.label} · ${fx.src}`;if(liveRate!==null){const p=(liveRate*100).toFixed(2).replace('.',',');return`100 CHF = ${p} EUR · EZB-Tageskurs`;}return'100 CHF = 109,00 EUR · Schätzwert';}
+function updateFxBadge(){const el=document.getElementById('fx-badge');if(el)el.textContent=getFxLabel();}
+
+function bvgSparRateAN(alter){if(alter<25)return 0;if(alter<35)return 0.035;if(alter<45)return 0.05;if(alter<55)return 0.075;return 0.09;}
 function bvgSparRateAG(alter){return bvgSparRateAN(alter);}
-const BVG_RISIKO_AN=0.005, BVG_RISIKO_AG=0.005;
+const BVG_RISIKO_AN=0.005,BVG_RISIKO_AG=0.005;
 
-// ============================================================
-//  WECHSELKURSE
-//  Anlage N-Gre Jahreskurse (Quelle: Finanzämter Baden-Württemberg)
-//  Schreibweise: 100 CHF = X EUR → also getCHF_EUR() = X/100
-// ============================================================
-const FX_ANNUAL = {
-  2024: { rate: 1.045, label: '100 CHF = 104,50 EUR', src: 'Anlage N-Gre 2024' },
-  2025: { rate: 1.065, label: '100 CHF = 106,50 EUR', src: 'Anlage N-Gre 2025' },
-};
-// "aktuell" (letztes Jahr in YEARS) nutzt Live-Tageskurs
-let liveRate = null;       // wird async befüllt
-let liveFetched = false;
+const CURRENT_YEAR=new Date().getFullYear();
+const YEARS=[CURRENT_YEAR-2,CURRENT_YEAR-1,CURRENT_YEAR];
+let selectedYear=CURRENT_YEAR,period='monthly',kirchesteuer=false,pendler=true,kvMode='chf';
+const TOTAL_ARBEITSTAGE=240;
 
-async function fetchLiveRate() {
-  try {
-    // Frankfurter.app: kostenlose EZB-Kurse, kein API-Key nötig
-    const r = await fetch('https://api.frankfurter.app/latest?from=CHF&to=EUR');
-    const d = await r.json();
-    // d.rates.EUR = wie viel EUR für 1 CHF
-    liveRate = d.rates.EUR;
-    liveFetched = true;
-    updateFxBadge();
-  } catch(e) {
-    // Fallback: EZB-Referenzkurs EUR/CHF vom SDMX-JSON-Endpoint
-    try {
-      const r2 = await fetch('https://data-api.ecb.europa.eu/service/data/EXR/D.CHF.EUR.SP00.A?lastNObservations=1&detail=dataonly&format=jsondata');
-      const d2 = await r2.json();
-      // EUR/CHF-Kurs → 1 CHF = 1/(EUR/CHF)
-      const eurChf = d2.dataSets[0].series['0:0:0:0:0'].observations['0'][0];
-      liveRate = 1 / eurChf;
-      liveFetched = true;
-      updateFxBadge();
-    } catch(e2) {
-      liveRate = null;
-      liveFetched = true;
-      updateFxBadge();
-    }
-  }
-}
-
-function getCHF_EUR() {
-  const fx = FX_ANNUAL[selectedYear];
-  if (fx) return fx.rate;
-  // "aktuell"-Jahr → liveRate oder Fallback
-  return liveRate !== null ? liveRate : 1.09;
-}
-
-function getFxLabel() {
-  const fx = FX_ANNUAL[selectedYear];
-  if (fx) return `${fx.label} · ${fx.src}`;
-  if (liveRate !== null) {
-    const per100 = (liveRate * 100).toFixed(2).replace('.', ',');
-    return `100 CHF = ${per100} EUR · EZB-Tageskurs`;
-  }
-  return '100 CHF = 109,00 EUR · Schätzwert (kein Live-Kurs)';
-}
-
-function updateFxBadge() {
-  const el = document.getElementById('fx-badge');
-  if (!el) return;
-  el.textContent = getFxLabel();
-}
-
-// ============================================================
-//  STATE
-// ============================================================
-const CURRENT_YEAR = new Date().getFullYear();
-// Statt "2026" zeigen wir "aktuell" – letzter Eintrag in YEARS ist das aktuelle Jahr
-const YEARS = [CURRENT_YEAR-2, CURRENT_YEAR-1, CURRENT_YEAR];
-let selectedYear = CURRENT_YEAR;
-let period = 'monthly';    // 'monthly' | 'yearly'
-let kirchesteuer = false;
-let pendler = true;
-let kvMode = 'chf';
-
-// ============================================================
-//  INIT
-// ============================================================
 document.addEventListener('DOMContentLoaded',()=>{
   const sel=document.getElementById('year-selector');
   YEARS.forEach(y=>{
     const btn=document.createElement('button');
-    btn.className='pill-btn'+(y===selectedYear?' active':'');
-    // Letztes Jahr (aktuelles) = "Aktuell" anzeigen
-    btn.textContent = (y===CURRENT_YEAR) ? 'Aktuell' : String(y);
-    btn.dataset.year = y;
+    btn.className='tab-btn'+(y===selectedYear?' active':'');
+    btn.textContent=y===CURRENT_YEAR?'Aktuell':String(y);
+    btn.dataset.year=y;
     btn.onclick=()=>selectYear(y);
     sel.appendChild(btn);
   });
   selectYear(selectedYear);
   setPendler(true);
-  onHoTageChange(); // Pendler-Tage initial befüllen
-  fetchLiveRate();  // Tageskurs asynchron laden
-
-  // Pendler-Tage: nicht mehr auto-aktualisieren wenn manuell bearbeitet
-  document.getElementById('pendler-tage').addEventListener('input', function(){ this._edited=true; });
-
-  // AG-Defaults vorausfüllen wenn Brutto ändert
+  onHoTageChange();
+  fetchLiveRate();
+  document.getElementById('pendler-tage').addEventListener('input',function(){this._edited=true;});
   function fillAgDefaults(){
     const bM=getBruttoM();
     const ktgEl=document.getElementById('ktg-ag');
     const nbuvEl=document.getElementById('nbuv-ag');
-    if(!ktgEl._edited) ktgEl.value=(bM*0.01).toFixed(0);
-    if(!nbuvEl._edited) nbuvEl.value=(bM*0.015).toFixed(0);
+    if(!ktgEl._edited)ktgEl.value=(bM*0.01).toFixed(0);
+    if(!nbuvEl._edited)nbuvEl.value=(bM*0.015).toFixed(0);
   }
-  document.getElementById('ktg-ag').addEventListener('input',function(){this._edited=true});
-  document.getElementById('nbuv-ag').addEventListener('input',function(){this._edited=true});
-
+  document.getElementById('ktg-ag').addEventListener('input',function(){this._edited=true;});
+  document.getElementById('nbuv-ag').addEventListener('input',function(){this._edited=true;});
   document.getElementById('brutto-m').addEventListener('input',()=>{syncBrutto('m');fillAgDefaults();});
   document.getElementById('brutto-j').addEventListener('input',()=>{syncBrutto('j');fillAgDefaults();});
   document.getElementById('alter').addEventListener('input',onAlterChange);
   fillAgDefaults();
 });
 
-// ============================================================
-//  PERIOD: steuert welches Feld "aktiv" (editierbar) ist
-// ============================================================
 function setPeriod(p){
   period=p;
   document.getElementById('btn-monthly').classList.toggle('active',p==='monthly');
   document.getElementById('btn-yearly').classList.toggle('active',p==='yearly');
-
-  const mInput=document.getElementById('brutto-m');
-  const jInput=document.getElementById('brutto-j');
-  const mLabel=document.getElementById('lbl-brutto-m');
-  const jLabel=document.getElementById('lbl-brutto-j');
-
+  const mInput=document.getElementById('brutto-m'),jInput=document.getElementById('brutto-j');
   if(p==='monthly'){
-    mInput.classList.add('active-input'); mInput.classList.remove('computed'); mInput.readOnly=false;
-    jInput.classList.remove('active-input'); jInput.classList.add('computed'); jInput.readOnly=true;
-    mLabel.classList.add('active-period'); jLabel.classList.remove('active-period');
-    // recalculate j from m
-    const m=parseFloat(mInput.value)||0;
-    jInput.value=(m*12).toFixed(0);
-  } else {
-    jInput.classList.add('active-input'); jInput.classList.remove('computed'); jInput.readOnly=false;
-    mInput.classList.remove('active-input'); mInput.classList.add('computed'); mInput.readOnly=true;
-    jLabel.classList.add('active-period'); mLabel.classList.remove('active-period');
-    // recalculate m from j
-    const j=parseFloat(jInput.value)||0;
-    mInput.value=(j/12).toFixed(2);
+    mInput.classList.add('active-input');mInput.classList.remove('computed');mInput.readOnly=false;
+    jInput.classList.remove('active-input');jInput.classList.add('computed');jInput.readOnly=true;
+    jInput.value=((parseFloat(mInput.value)||0)*12).toFixed(0);
+  }else{
+    jInput.classList.add('active-input');jInput.classList.remove('computed');jInput.readOnly=false;
+    mInput.classList.remove('active-input');mInput.classList.add('computed');mInput.readOnly=true;
+    mInput.value=((parseFloat(jInput.value)||0)/12).toFixed(2);
   }
   updateSwicaPreview();
 }
-
 function syncBrutto(which){
-  if(which==='m'&&period==='monthly'){
-    const m=parseFloat(document.getElementById('brutto-m').value)||0;
-    document.getElementById('brutto-j').value=(m*12).toFixed(0);
-  } else if(which==='j'&&period==='yearly'){
-    const j=parseFloat(document.getElementById('brutto-j').value)||0;
-    document.getElementById('brutto-m').value=(j/12).toFixed(2);
-  }
+  if(which==='m'&&period==='monthly'){const m=parseFloat(document.getElementById('brutto-m').value)||0;document.getElementById('brutto-j').value=(m*12).toFixed(0);}
+  else if(which==='j'&&period==='yearly'){const j=parseFloat(document.getElementById('brutto-j').value)||0;document.getElementById('brutto-m').value=(j/12).toFixed(2);}
 }
+function getBruttoM(){if(period==='monthly')return parseFloat(document.getElementById('brutto-m').value)||0;return(parseFloat(document.getElementById('brutto-j').value)||0)/12;}
 
-function getBruttoM(){
-  // Always derive monthly value
-  if(period==='monthly') return parseFloat(document.getElementById('brutto-m').value)||0;
-  return (parseFloat(document.getElementById('brutto-j').value)||0)/12;
-}
-
-// ============================================================
-//  YEAR SELECTION
-// ============================================================
 function selectYear(y){
   selectedYear=y;
-  document.querySelectorAll('#year-selector .pill-btn').forEach(b=>{
-    b.classList.toggle('active', parseInt(b.dataset.year)===y);
-  });
+  document.querySelectorAll('#year-selector .tab-btn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.year)===y));
   const p=PARAMS[y];
-  document.getElementById('year-info').textContent=
-    `GFB ${p.grundfreibetrag.toLocaleString('de')} € · AHV ${(p.ahvRate*100).toFixed(2)} % · ALV ${(p.alvRate*100).toFixed(2)} %`;
+  document.getElementById('year-info').textContent=`GFB ${p.grundfreibetrag.toLocaleString('de')} € · AHV ${(p.ahvRate*100).toFixed(2)}% · ALV ${(p.alvRate*100).toFixed(2)}%`;
   document.getElementById('ahv-display').value=(p.ahvRate*100).toFixed(2);
   document.getElementById('alv-display').value=(p.alvRate*100).toFixed(2);
   document.getElementById('ahv-hint').textContent=`Gesetzlich – ${y}`;
   document.getElementById('alv-hint').textContent=`bis CHF 148'200/J.`;
-  updateBvgDisplay();
-  updateSwicaPreview();
-  updateFxBadge();
-  updatePendlerHint();
+  updateBvgDisplay();updateSwicaPreview();updateFxBadge();updatePendlerHint();
 }
 
 function updateBvgDisplay(){
   const alter=parseInt(document.getElementById('alter').value)||35;
   const rate=(bvgSparRateAN(alter)+BVG_RISIKO_AN)*100;
   document.getElementById('bvg-display').value=rate.toFixed(1);
-  document.getElementById('bvg-hint').textContent=
-    `Spar ${(bvgSparRateAN(alter)*100).toFixed(1)}% + Risiko 0.5% auf koord. Lohn`;
+  document.getElementById('bvg-hint').textContent=`Spar ${(bvgSparRateAN(alter)*100).toFixed(1)}% + Risiko 0.5% auf koord. Lohn`;
 }
-
-function onAlterChange(){
-  updateBvgDisplay();
-  updateSwicaPreview();
-}
-
-function getSwicaPraemie(alter,params){
-  if(alter<19) return params.swicaKV.u18;
-  if(alter<26) return params.swicaKV.u25;
-  return params.swicaKV.ab26;
-}
-
+function onAlterChange(){updateBvgDisplay();updateSwicaPreview();}
+function getSwicaPraemie(alter,params){if(alter<19)return params.swicaKV.u18;if(alter<26)return params.swicaKV.u25;return params.swicaKV.ab26;}
 function updateSwicaPreview(){
   const alter=parseInt(document.getElementById('alter').value)||35;
   const p=PARAMS[selectedYear];
@@ -771,22 +560,16 @@ function updateSwicaPreview(){
   document.getElementById('kv-praemie').value=praemie.toFixed(2);
   const gruppe=alter<19?'0–18 J.':alter<26?'19–25 J.':'ab 26 J.';
   const prev=document.getElementById('kv-preview');
-  prev.textContent=`▲ SWICA Standard EU ${selectedYear} · ${gruppe} · CHF ${praemie.toFixed(2)}/Mt. (BAG-Prämienliste, ohne Unfall)`;
-  prev.classList.add('visible');
+  prev.textContent=`SWICA Standard EU ${selectedYear} · ${gruppe} · CHF ${praemie.toFixed(2)}/Mt.`;
+  prev.style.display='block';
 }
-
-function clearKvNote(){
-  document.getElementById('kv-preview').textContent='▲ Manuell überschrieben';
+function clearKvNote(){document.getElementById('kv-preview').textContent='Manuell überschrieben';}
+function onHoTageChange(){
+  const ho=Math.min(parseInt(document.getElementById('ho-tage').value)||0,210);
+  const pTageEl=document.getElementById('pendler-tage');
+  if(!pTageEl._edited)pTageEl.value=Math.max(0,TOTAL_ARBEITSTAGE-ho);
 }
-
-// ============================================================
-//  MISC TOGGLES
-// ============================================================
-function setKirche(v){
-  kirchesteuer=v;
-  document.getElementById('btn-kk-ja').classList.toggle('active',v);
-  document.getElementById('btn-kk-nein').classList.toggle('active',!v);
-}
+function setKirche(v){kirchesteuer=v;document.getElementById('btn-kk-ja').classList.toggle('active',v);document.getElementById('btn-kk-nein').classList.toggle('active',!v);}
 function setPendler(v){
   pendler=v;
   document.getElementById('btn-pend-ja').classList.toggle('active',v);
@@ -798,15 +581,10 @@ function setPendler(v){
   document.getElementById('pendler-tage').disabled=!v;
   updatePendlerHint();
 }
-
 function updatePendlerHint(){
   const hint=document.getElementById('pendler-hint');
-  if(!hint) return;
-  if(selectedYear>=2026){
-    hint.textContent=`Ab 2026: einheitlich 0,38 €/km · km × Arbeitstage × 0,38 €, max. 4.500 €/J.`;
-  } else {
-    hint.textContent=`Bis 2025: 0,30 €/km (1–20 km) + 0,38 €/km (ab 21 km) · max. 4.500 €/J.`;
-  }
+  if(!hint)return;
+  hint.textContent=selectedYear>=2026?'Ab 2026: einheitlich 0,38 €/km, max. 4.500 €/J.':'Bis 2025: 0,30 €/km (1–20 km) + 0,38 €/km (ab 21 km), max. 4.500 €/J.';
 }
 function setKvMode(m){
   kvMode=m;
@@ -815,328 +593,174 @@ function setKvMode(m){
   document.getElementById('kv-eur-wrap').style.display=m==='eur'?'':'none';
 }
 
-// ============================================================
-//  ESt § 32a (Grundfreibetrag in Formel integriert)
-// ============================================================
 function calcESt(zve,p){
-  if(zve<=p.grundfreibetrag) return 0;
-  if(zve<=p.z1_top){
-    const y=(zve-p.grundfreibetrag)/10000;
-    return Math.floor((p.a1*y+p.b1)*y);
-  }
-  if(zve<=p.z2_top){
-    const z=(zve-p.z1_top)/10000;
-    return Math.floor((p.a2*z+p.b2)*z+p.c2);
-  }
-  if(zve<=p.z3_top) return Math.floor(p.flat3*zve-p.k3);
+  if(zve<=p.grundfreibetrag)return 0;
+  if(zve<=p.z1_top){const y=(zve-p.grundfreibetrag)/10000;return Math.floor((p.a1*y+p.b1)*y);}
+  if(zve<=p.z2_top){const z=(zve-p.z1_top)/10000;return Math.floor((p.a2*z+p.b2)*z+p.c2);}
+  if(zve<=p.z3_top)return Math.floor(p.flat3*zve-p.k3);
   return Math.floor(p.flat4*zve-p.k4);
 }
 
-// ============================================================
-//  FORMATTER: dual M/J values
-// ============================================================
-function fmtCHF(n){
-  if(n==null||isNaN(n)) return '–';
-  return new Intl.NumberFormat('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
-}
-function fmtEUR(n){
-  if(n==null||isNaN(n)) return '–';
-  return new Intl.NumberFormat('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
-}
+function fmtN(n,cur='CHF'){if(n==null||isNaN(n))return'–';return new Intl.NumberFormat('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' '+cur;}
+const neg=(v,c='CHF')=>v===0?'—':'−'+fmtN(v,c);
+const pos=(v,c='CHF')=>v===0?'—':'+'+fmtN(v,c);
+const plain=(v,c='CHF')=>fmtN(v,c);
+const rowD=(name,valM,valJ,cls='',note='',total=false)=>({name,valM,valJ,cls,note,total});
+const rowS=(name,val,cls='',note='',total=false)=>({name,val,cls,note,total});
 
-// Build a dual-value row: name | monthly val | yearly val
 function makeRows(rows,id){
   document.getElementById(id).innerHTML=rows.map(r=>{
-    const cls=r.cls||'';
-    const nameHtml=`${r.name}${r.note?`<span class="sub-note">${r.note}</span>`:''}`;
-    // If val is a plain string (for "text-only" rows), show it spanning both cols
+    const nameHtml=r.name+(r.note?`<span class="sub-note">${r.note}</span>`:'');
     if(r.valM===undefined){
-      return `<div class="breakdown-row ${r.total?'total':''}">
-        <span class="name">${nameHtml}</span>
-        <span class="val ${cls}" style="grid-column:2/4;text-align:right">${r.val||'–'}</span>
-      </div>`;
+      return`<div class="breakdown-row${r.total?' total':''}"><span class="name">${nameHtml}</span><span class="val ${r.cls}" style="grid-column:2/4;text-align:right">${r.val||'–'}</span></div>`;
     }
-    return `<div class="breakdown-row ${r.total?'total':''}">
-      <span class="name">${nameHtml}</span>
-      <span class="val ${cls}">${r.valM}</span>
-      <span class="val ${cls} dim">${r.valJ}</span>
-    </div>`;
+    return`<div class="breakdown-row${r.total?' total':''}"><span class="name">${nameHtml}</span><span class="val ${r.cls}">${r.valM}</span><span class="val ${r.cls} dim">${r.valJ}</span></div>`;
   }).join('');
 }
 
-// Helpers for dual rows
-const rowD=(name,m,j,cls='',note='',total=false)=>({name,valM:m,valJ:j,cls,note,total});
-const rowS=(name,val,cls='',note='',total=false)=>({name,val,cls,note,total});  // single spanning val
-
-// Sign prefix helpers
-const neg=(v,cur='CHF')=> v===0?'—':`−${fmtCHF(v)} ${cur}`;
-const pos=(v,cur='CHF')=> v===0?'—':`+${fmtCHF(v)} ${cur}`;
-const plain=(v,cur='CHF')=>`${fmtCHF(v)} ${cur}`;
-
-// ============================================================
-//  HAUPTRECHNUNG
-// ============================================================
 function calculate(){
   const p=PARAMS[selectedYear];
-  const alter    =parseInt(document.getElementById('alter').value)||35;
-  const fs       ='single'; // Nur Einzelveranlagung
-  const km       =parseInt(document.getElementById('pendler-km').value)||0;
+  const alter=parseInt(document.getElementById('alter').value)||35;
+  const km=parseInt(document.getElementById('pendler-km').value)||0;
   const nbuvAnPct=(parseFloat(document.getElementById('nbuv-an').value)||0)/100;
-  const ktgAnPct =(parseFloat(document.getElementById('ktg-an').value)||0)/100;
-
+  const ktgAnPct=(parseFloat(document.getElementById('ktg-an').value)||0)/100;
   const bruttoM=getBruttoM();
   const bruttoJ=bruttoM*12;
-
-  // AG-Beiträge
-  const ktgAg =parseFloat(document.getElementById('ktg-ag').value)||0;
+  const ktgAg=parseFloat(document.getElementById('ktg-ag').value)||0;
   const nbuvAg=parseFloat(document.getElementById('nbuv-ag').value)||0;
   const agZuschlagM=ktgAg+nbuvAg;
   const massgebendM=bruttoM+agZuschlagM;
   const massgebendJ=massgebendM*12;
-
-  // CH-AN-Abzüge (monatlich)
-  const ahvM   =bruttoM*p.ahvRate;
-  const alvM   =bruttoM*p.alvRate;
-  const ktgAnM =bruttoM*ktgAnPct;
+  const ahvM=bruttoM*p.ahvRate;
+  const alvM=bruttoM*p.alvRate;
+  const ktgAnM=bruttoM*ktgAnPct;
   const nbuvAnM=bruttoM*nbuvAnPct;
   const koordAbzugM=p.bvgKoordAbzugJ/12;
   const bvgBasisM=Math.max(0,bruttoM-koordAbzugM);
-  const bvgAnM =(bvgSparRateAN(alter)+BVG_RISIKO_AN)*bvgBasisM;
+  const bvgAnM=(bvgSparRateAN(alter)+BVG_RISIKO_AN)*bvgBasisM;
   const chAbzuegeAN=ahvM+alvM+ktgAnM+nbuvAnM+bvgAnM;
-
-  // CH-QST 4.5 %
   const chQST_M=bruttoM*0.045;
-
-  // ── NBUV-WK: 50 % der Gesamtprämie (AN + AG) ──
-  // AN-Anteil monatlich in CHF; AG-Anteil ist nbuvAg
-  const nbuvGesamtM = nbuvAnM + nbuvAg;
-  const nbuvWkAbzugJ = nbuvGesamtM * 0.5 * 12 * getCHF_EUR();  // in EUR/Jahr
-
-  // ── Pendlerpauschale – jahresabhängige Sätze ──
-  // 2024/2025: 0–20 km → 0,30 €; ab 21 km → 0,38 €; max 4.500 €
-  // 2026+:     einheitlich 0,38 € ab km 1; max 4.500 €
-  const arbeitstage = pendler ? (parseInt(document.getElementById('pendler-tage').value)||240) : 0;
-  let pendlerPauschaleRoh = 0;
-  if(pendler && km > 0){
-    if(selectedYear >= 2026){
-      pendlerPauschaleRoh = km * arbeitstage * 0.38;
-    } else {
-      pendlerPauschaleRoh = Math.min(km,20) * arbeitstage * 0.30
-                           + Math.max(0, km-20) * arbeitstage * 0.38;
-    }
+  const nbuvGesamtM=nbuvAnM+nbuvAg;
+  const nbuvWkAbzugJ=nbuvGesamtM*0.5*12*getCHF_EUR();
+  const arbeitstage=pendler?(parseInt(document.getElementById('pendler-tage').value)||240):0;
+  let pendlerPauschaleRoh=0;
+  if(pendler&&km>0){
+    if(selectedYear>=2026) pendlerPauschaleRoh=km*arbeitstage*0.38;
+    else pendlerPauschaleRoh=Math.min(km,20)*arbeitstage*0.30+Math.max(0,km-20)*arbeitstage*0.38;
   }
-  const pendlerPauschale = Math.min(pendlerPauschaleRoh, 4500);
-
-  // ── Homeoffice-Pauschale ──
-  // 6 €/Tag, max. 210 Tage = max. 1.260 €/J. (§4 Abs.5 Nr.6c EStG, seit 2023)
-  const hoTage = Math.min(parseInt(document.getElementById('ho-tage').value)||0, 210);
-  const hoPauschale = hoTage * 6; // max 1.260 €
-
-  // ── WK-Summe ──
-  // = Pendlerpauschale + HO-Pauschale + 50 % NBUV-Gesamtprämie + weitere WK
-  // mind. jedoch AN-Pauschbetrag (1.230 €)
-  const weitereWkJ = parseFloat(document.getElementById('weitere-wk').value)||0;
-  const wkRohsumme = pendlerPauschale + hoPauschale + nbuvWkAbzugJ + weitereWkJ;
-  const wkAbzug    = Math.max(p.wkPauschale, wkRohsumme);
-  // Für Anzeige: was ist die Basis (Pauschale oder tatsächliche WK)?
-  const wkNutzePauschale = wkRohsumme < p.wkPauschale;
-
-  // KV-Prämie (Eingabewert für Auszahlungsrechnung und SA)
-  const kvChfM = parseFloat(document.getElementById('kv-praemie').value)||0;
-  const kvAbzugEurM = kvMode==='eur'
-    ? (parseFloat(document.getElementById('kv-praemie-eur').value)||0)
-    : kvChfM * getCHF_EUR();
-
-  // ══════════════════════════════════════════════════════════════
-  // ══════════════════════════════════════════════════════════════
-  const splitting = (fs==='married_single'||fs==='married_both');
-  const saAlterHoechst = splitting ? p.saAlterHoechstLedig*2 : p.saAlterHoechstLedig;
-
-  // ── SA 1: Altersvorsorge §10 Abs.1 Nr.2a i.V.m. Abs.3 ──
-  // AHV/IV (AN + AG je 5,35 %) + BVG obligatorisch (AN + AG)
-  // Gesamtbeitrag (AN+AG) in EUR/Jahr → davon abziehbar: min(gesamt, Höchstbetrag) − steuerfreier AG-Anteil
-  const ahvGesamtJ  = bruttoM * p.ahvRate * 2 * 12;               // AN + AG, in CHF
-  const bvgAgM      = (bvgSparRateAG(alter) + BVG_RISIKO_AG) * bvgBasisM;
-  const bvgGesamtJ  = (bvgAnM + bvgAgM) * 12;                     // AN + AG, in CHF
-  const alterVorsorgeGesamtEur = (ahvGesamtJ + bvgGesamtJ) * getCHF_EUR();
-
-  // Steuerfreier AG-Anteil §3 Nr.62 (AHV AG + BVG AG)
-  const agAlterEur  = (ahvM * bruttoM * p.ahvRate / p.ahvRate     // = ahvM (AG = AN)
-                       + bvgAgM) * 12 * getCHF_EUR();
-  // Vereinfacht: AG-AHV = ahvM * 12 * kurs, AG-BVG = bvgAgM * 12 * kurs
-  const agAlterEurCorr = (ahvM + bvgAgM) * 12 * getCHF_EUR();
-
-  const saAlterRoh  = Math.min(alterVorsorgeGesamtEur, saAlterHoechst) - agAlterEurCorr;
-  const saAlter     = Math.max(0, saAlterRoh);
-
-  // ── SA 2: KV-Basisschutz §10 Abs.1 Nr.3 ──
-  // KV-Prämie CH (Grundversicherung) ist Basisschutz → voll absetzbar, kein Höchstbetrag
-  const saKV        = kvChfM * 12 * getCHF_EUR();
-
-  // ── SA-Pauschale §10c: 36 € (Mindest-SA, falls SA-Summe kleiner) ──
-  const soPA        = 36;
-  const saGesamt    = Math.max(soPA, saAlter + saKV);
-
-  // ══════════════════════════════════════════════════════════════
-  //  ZVE
-  // ══════════════════════════════════════════════════════════════
-  const zve = Math.max(0, massgebendJ * getCHF_EUR() - wkAbzug - saGesamt);
-
-
-  // ESt
-  const fsLabel={single:'Grundtarif',married_single:'Splitting',married_both:'Splitting',single_parent:'Grundtarif + Entlastungsbetrag'};
-  let estJ;
-  if(fs==='married_single'||fs==='married_both') estJ=calcESt(zve/2,p)*2;
-  else if(fs==='single_parent')                   estJ=calcESt(Math.max(0,zve-p.entlastungsbetrag),p);
-  else                                             estJ=calcESt(zve,p);
-
-  // Soli
+  const pendlerPauschale=Math.min(pendlerPauschaleRoh,4500);
+  const hoTage=Math.min(parseInt(document.getElementById('ho-tage').value)||0,210);
+  const hoPauschale=hoTage*6;
+  const weitereWkJ=parseFloat(document.getElementById('weitere-wk').value)||0;
+  const wkRohsumme=pendlerPauschale+hoPauschale+nbuvWkAbzugJ+weitereWkJ;
+  const wkAbzug=Math.max(p.wkPauschale,wkRohsumme);
+  const wkNutzePauschale=wkRohsumme<p.wkPauschale;
+  const kvChfM=parseFloat(document.getElementById('kv-praemie').value)||0;
+  const kvAbzugEurM=kvMode==='eur'?(parseFloat(document.getElementById('kv-praemie-eur').value)||0):kvChfM*getCHF_EUR();
+  const saAlterHoechst=p.saAlterHoechstLedig;
+  const ahvGesamtJ=bruttoM*p.ahvRate*2*12;
+  const bvgAgM=(bvgSparRateAG(alter)+BVG_RISIKO_AG)*bvgBasisM;
+  const bvgGesamtJ=(bvgAnM+bvgAgM)*12;
+  const alterVorsorgeGesamtEur=(ahvGesamtJ+bvgGesamtJ)*getCHF_EUR();
+  const agAlterEurCorr=(ahvM+bvgAgM)*12*getCHF_EUR();
+  const saAlterRoh=Math.min(alterVorsorgeGesamtEur,saAlterHoechst)-agAlterEurCorr;
+  const saAlter=Math.max(0,saAlterRoh);
+  const saKV=kvChfM*12*getCHF_EUR();
+  const saGesamt=Math.max(36,saAlter+saKV);
+  const zve=Math.max(0,massgebendJ*getCHF_EUR()-wkAbzug-saGesamt);
+  const estJ=calcESt(zve,p);
   let soli=0;
-  if(estJ>p.soliFreigrenze)           soli=estJ*p.soliFaktor;
+  if(estJ>p.soliFreigrenze) soli=estJ*p.soliFaktor;
   else if(estJ>p.soliGleitzone_start) soli=(estJ-p.soliGleitzone_start)*0.199;
-
   const kst=kirchesteuer?estJ*p.kstRate:0;
-
-  // CH-QST-Anrechnung
   const chQSTEurJ=chQST_M*12*getCHF_EUR();
   const anrechnungJ=Math.min(chQSTEurJ,estJ);
   const estNachAnrJ=Math.max(0,estJ-anrechnungJ);
-
-  const deGesamtJ    =estNachAnrJ+soli+kst;
+  const deGesamtJ=estNachAnrJ+soli+kst;
   const deGesamtM_EUR=deGesamtJ/12;
   const deGesamtM_CHF=deGesamtM_EUR/getCHF_EUR();
-
-  // NETTO (CHF, nach CH-SV + CH-QST + DE-Steuern, vor KV)
   const nettoM_CHF=bruttoM-chAbzuegeAN-chQST_M-deGesamtM_CHF;
   const nettoJ_CHF=nettoM_CHF*12;
-
-  // Verfügbar nach KV (kein KV-Abzug von CH-SV, nur Konvertierung + KV-Prämie)
-  const verfuegbarM_EUR=nettoM_CHF*getCHF_EUR()-kvAbzugEurM;
-  const verfuegbarJ_EUR=verfuegbarM_EUR*12;
-
-  // ✦ Echtes Netto = Brutto − CH-SV-AN − CH-QST − DE-Steuern − KV  (alles in EUR)
-  const echtNettoM_EUR=nettoM_CHF*getCHF_EUR() - kvAbzugEurM;
+  const echtNettoM_EUR=nettoM_CHF*getCHF_EUR()-kvAbzugEurM;
   const echtNettoJ_EUR=echtNettoM_EUR*12;
   const bruttoEurM=bruttoM*getCHF_EUR();
   const bruttoEurJ=bruttoJ*getCHF_EUR();
   const echtQuote=(echtNettoM_EUR/bruttoEurM)*100;
 
-  // ── HERO ──
+  document.getElementById('r-brutto-eur-m').textContent=plain(bruttoEurM,'EUR');
+  document.getElementById('r-brutto-eur-j').textContent=plain(bruttoEurJ,'EUR');
+  document.getElementById('r-sub-brutto-eur').textContent=getFxLabel().split('·')[0].trim();
+  document.getElementById('r-echt-eur-m').textContent=plain(echtNettoM_EUR,'EUR');
+  document.getElementById('r-sub-echt-m').textContent=`Quote ${echtQuote.toFixed(1)}% von Brutto`;
+  document.getElementById('r-echt-eur-j').textContent=plain(echtNettoJ_EUR,'EUR');
+  document.getElementById('r-sub-echt-j').textContent=`${echtQuote.toFixed(1)}% von ${fmtN(bruttoEurM,'EUR')}/Mt.`;
 
-  // Zeile 1: Bruttolohn EUR
-  document.getElementById('r-brutto-eur-m').textContent = plain(bruttoEurM, 'EUR');
-  document.getElementById('r-brutto-eur-j').textContent = plain(bruttoEurJ, 'EUR');
-  document.getElementById('r-sub-brutto-eur').textContent = getFxLabel().split('·')[0].trim();
-
-  // Zeile 2: Echtes Netto EUR
-  document.getElementById('r-echt-eur-m').textContent = plain(echtNettoM_EUR, 'EUR');
-  document.getElementById('r-sub-echt-m').textContent  = `Quote ${echtQuote.toFixed(1)}% von Brutto`;
-  document.getElementById('r-echt-eur-j').textContent = plain(echtNettoJ_EUR, 'EUR');
-  document.getElementById('r-sub-echt-j').textContent  = `${echtQuote.toFixed(1)}% von ${fmtCHF(bruttoEurM)} EUR/Mt.`;
-
-  // ── CH-Abzüge ──
   makeRows([
-    rowD('Bruttolohn',                       plain(bruttoM),           plain(bruttoJ)),
-    rowD('AHV/IV/EO ('+(p.ahvRate*100).toFixed(2)+'%)', neg(ahvM),    neg(ahvM*12),'neg'),
-    rowD('ALV ('+(p.alvRate*100).toFixed(2)+'%)',        neg(alvM),    neg(alvM*12),'neg'),
-    ...(ktgAnM>0?[rowD('KTG AN ('+(ktgAnPct*100).toFixed(2)+'%)',      neg(ktgAnM),  neg(ktgAnM*12),'neg')]:[]),
-    rowD('NBUV AN ('+(nbuvAnPct*100).toFixed(2)+'%)',    neg(nbuvAnM), neg(nbuvAnM*12),'neg'),
-    rowD('BVG AN (Spar '+(bvgSparRateAN(alter)*100).toFixed(1)+'%+0.5%)', neg(bvgAnM),neg(bvgAnM*12),'neg',
-      `auf koord. Lohn ${fmtCHF(bvgBasisM)} CHF/Mt.`),
-    rowD('CH-Quellensteuer (4.5%)',          neg(chQST_M),             neg(chQST_M*12),'neg','auf DE-ESt angerechnet'),
-    rowD('Netto vor DE-Steuer',
-      plain(bruttoM-chAbzuegeAN-chQST_M),
-      plain((bruttoM-chAbzuegeAN-chQST_M)*12),'pos','',true),
+    rowD('Bruttolohn',plain(bruttoM),plain(bruttoJ)),
+    rowD('AHV/IV/EO ('+(p.ahvRate*100).toFixed(2)+'%)',neg(ahvM),neg(ahvM*12),'neg'),
+    rowD('ALV ('+(p.alvRate*100).toFixed(2)+'%)',neg(alvM),neg(alvM*12),'neg'),
+    ...(ktgAnM>0?[rowD('KTG AN ('+(ktgAnPct*100).toFixed(2)+'%)',neg(ktgAnM),neg(ktgAnM*12),'neg')]:[]),
+    rowD('NBUV AN ('+(nbuvAnPct*100).toFixed(2)+'%)',neg(nbuvAnM),neg(nbuvAnM*12),'neg'),
+    rowD('BVG AN (Spar '+(bvgSparRateAN(alter)*100).toFixed(1)+'%+0.5%)',neg(bvgAnM),neg(bvgAnM*12),'neg',`koord. Lohn ${fmtN(bvgBasisM)}/Mt.`),
+    rowD('CH-Quellensteuer (4.5%)',neg(chQST_M),neg(chQST_M*12),'neg','auf DE-ESt angerechnet'),
+    rowD('Netto vor DE-Steuer',plain(bruttoM-chAbzuegeAN-chQST_M),plain((bruttoM-chAbzuegeAN-chQST_M)*12),'pos','',true),
   ],'rows-ch');
 
-  // ── DE-Steuer ──
   makeRows([
     rowS('Maßgebender Lohn',plain(massgebendM)+' / '+plain(massgebendJ),'','Brutto + steuerpfl. AG-Beiträge'),
     rowS('WK-Abzug gesamt',neg(wkAbzug/12*getCHF_EUR(),'EUR')+' / '+neg(wkAbzug,'EUR'),'neg',
-      wkNutzePauschale
-        ? `AN-Pauschbetrag ${p.wkPauschale} € greift (Rohsumme ${fmtCHF(wkRohsumme)} € < Pauschale)`
-        : `Pendler ${fmtCHF(pendlerPauschale)} €${hoPauschale>0?' + HO '+fmtCHF(hoPauschale)+' €':''} + NBUV-WK ${fmtCHF(Math.round(nbuvWkAbzugJ))} €${weitereWkJ>0?' + weitere '+fmtCHF(weitereWkJ)+' €':''} /J.`),
-    rowS('SA: Altersvorsorge (§10 Abs.1 Nr.2a)',
-      neg(saAlter/12,'EUR')+' / '+neg(saAlter,'EUR'),'neg',
-      `AHV/IV+BVG gesamt ${fmtCHF(Math.round(alterVorsorgeGesamtEur))} € − AG-Anteil ${fmtCHF(Math.round(agAlterEurCorr))} € = ${fmtCHF(Math.round(saAlterRoh))} €, Höchstbetrag ${saAlterHoechst.toLocaleString('de')} €`),
-    rowS('SA: KV-Basisschutz (§10 Abs.1 Nr.3)',
-      neg(saKV/12,'EUR')+' / '+neg(saKV,'EUR'),'neg',
-      `Schweizer KVG-Prämie ${fmtCHF(kvChfM)} CHF/Mt. voll absetzbar`),
-    rowS('ZVE (§ 2 Abs. 5)',plain(zve,'EUR'),'',
-      `Brutto ${fmtCHF(Math.round(massgebendJ*getCHF_EUR()))} − WK ${fmtCHF(Math.round(wkAbzug))} − SA ${fmtCHF(Math.round(saGesamt))} EUR`),
-    rowD('ESt brutto (§ 32a, '+fsLabel[fs]+')', neg(estJ/12,'EUR'), neg(estJ,'EUR'),'tax'),
-    rowD('+ Anrechnung CH-QST',               pos(anrechnungJ/12,'EUR'), pos(anrechnungJ,'EUR'),'pos'),
-    rowD('ESt nach Anrechnung',                neg(estNachAnrJ/12,'EUR'), neg(estNachAnrJ,'EUR'),'neg'),
-    rowD('Solidaritätszuschlag',               soli>0?neg(soli/12,'EUR'):'—', soli>0?neg(soli,'EUR'):'—', soli>0?'neg':''),
-    rowD(kirchesteuer?'Kirchensteuer (8%)':'Kirchensteuer',
-         kirchesteuer?neg(kst/12,'EUR'):'—', kirchesteuer?neg(kst,'EUR'):'—', kirchesteuer?'neg':''),
-    rowD('DE-Steuern gesamt',                  neg(deGesamtM_EUR,'EUR'), neg(deGesamtJ,'EUR'),'neg','',true),
+      wkNutzePauschale?`AN-Pauschbetrag ${p.wkPauschale} € greift`:`Pendler ${fmtN(pendlerPauschale,'EUR')}${hoPauschale>0?' + HO '+fmtN(hoPauschale,'EUR'):''} + NBUV-WK ${fmtN(Math.round(nbuvWkAbzugJ),'EUR')}${weitereWkJ>0?' + weitere '+fmtN(weitereWkJ,'EUR'):''} /J.`),
+    rowS('SA: Altersvorsorge §10 Abs.1 Nr.2a',neg(saAlter/12,'EUR')+' / '+neg(saAlter,'EUR'),'neg',
+      `AHV/IV+BVG ${fmtN(Math.round(alterVorsorgeGesamtEur),'EUR')} − AG ${fmtN(Math.round(agAlterEurCorr),'EUR')} = ${fmtN(Math.round(saAlterRoh),'EUR')}, max. ${saAlterHoechst.toLocaleString('de')} €`),
+    rowS('SA: KV-Basisschutz §10 Abs.1 Nr.3',neg(saKV/12,'EUR')+' / '+neg(saKV,'EUR'),'neg',`SWICA-Prämie ${fmtN(kvChfM)}/Mt. voll absetzbar`),
+    rowS('ZVE',plain(zve,'EUR'),'',`Brutto ${fmtN(Math.round(massgebendJ*getCHF_EUR()),'EUR')} − WK ${fmtN(Math.round(wkAbzug),'EUR')} − SA ${fmtN(Math.round(saGesamt),'EUR')}`),
+    rowD('ESt brutto (§32a)',neg(estJ/12,'EUR'),neg(estJ,'EUR'),'tax'),
+    rowD('+ Anrechnung CH-QST',pos(anrechnungJ/12,'EUR'),pos(anrechnungJ,'EUR'),'pos'),
+    rowD('ESt nach Anrechnung',neg(estNachAnrJ/12,'EUR'),neg(estNachAnrJ,'EUR'),'neg'),
+    rowD('Solidaritätszuschlag',soli>0?neg(soli/12,'EUR'):'—',soli>0?neg(soli,'EUR'):'—',soli>0?'neg':''),
+    rowD(kirchesteuer?'Kirchensteuer (8%)':'Kirchensteuer',kirchesteuer?neg(kst/12,'EUR'):'—',kirchesteuer?neg(kst,'EUR'):'—',kirchesteuer?'neg':''),
+    rowD('DE-Steuern gesamt',neg(deGesamtM_EUR,'EUR'),neg(deGesamtJ,'EUR'),'neg','',true),
   ],'rows-de');
 
-  // ── AG-Beiträge ──
   makeRows([
-    rowD('AG-Anteil KTG',  ktgAg>0?plain(ktgAg):  '—', ktgAg>0?plain(ktgAg*12):  '—', ktgAg>0?'tax':'','Geldwerter Vorteil → maßgeb. Lohn'),
-    rowD('AG-Anteil NBUV', nbuvAg>0?plain(nbuvAg):'—', nbuvAg>0?plain(nbuvAg*12):'—', nbuvAg>0?'tax':'','Geldwerter Vorteil → maßgeb. Lohn'),
-    rowD('AG-Zuschlag gesamt',
-      agZuschlagM>0?plain(agZuschlagM):'—',
-      agZuschlagM>0?plain(agZuschlagM*12):'—',
-      agZuschlagM>0?'tax':'',`Maßgeb. Lohn: ${fmtCHF(massgebendM)}/Mt.`,true),
+    rowD('AG-Anteil KTG',ktgAg>0?plain(ktgAg):'—',ktgAg>0?plain(ktgAg*12):'—',ktgAg>0?'tax':'','Geldwerter Vorteil'),
+    rowD('AG-Anteil NBUV',nbuvAg>0?plain(nbuvAg):'—',nbuvAg>0?plain(nbuvAg*12):'—',nbuvAg>0?'tax':'','Geldwerter Vorteil'),
+    rowD('AG-Zuschlag gesamt',agZuschlagM>0?plain(agZuschlagM):'—',agZuschlagM>0?plain(agZuschlagM*12):'—',agZuschlagM>0?'tax':'',`Maßgeb. Lohn: ${fmtN(massgebendM)}/Mt.`,true),
   ],'rows-ag');
 
-  // ── KV & Echtes Netto ──
   const swicaRef=getSwicaPraemie(alter,p);
   makeRows([
-    rowD('Netto CHF (nach CH-SV+QST+ESt)', plain(nettoM_CHF), plain(nettoJ_CHF),'pos'),
-    rowD('= in EUR',                       plain(nettoM_CHF*getCHF_EUR(),'EUR'), plain(nettoJ_CHF*getCHF_EUR(),'EUR'),'pos'),
-    rowD('SWICA-Referenz '+selectedYear,   plain(swicaRef),   plain(swicaRef*12),'',
-      alter<19?'0–18 J.':alter<26?'19–25 J.':'ab 26 J.'),
-    rowD('KV-Abzug',              neg(kvAbzugEurM,'EUR'),   neg(kvAbzugEurM*12,'EUR'),'neg',
-      kvMode==='eur'?'Eigener EUR-Wert':`CHF×${getCHF_EUR().toFixed(4)} umgerechnet`),
-    rowD('✦ Echtes Netto (nach allem)',plain(echtNettoM_EUR,'EUR'),plain(echtNettoJ_EUR,'EUR'),'pos',
-      `${echtQuote.toFixed(1)} % von Brutto ${fmtCHF(bruttoEurM)} EUR/Mt.`,true),
+    rowD('Netto CHF (nach CH-SV+QST+ESt)',plain(nettoM_CHF),plain(nettoJ_CHF),'pos'),
+    rowD('= in EUR',plain(nettoM_CHF*getCHF_EUR(),'EUR'),plain(nettoJ_CHF*getCHF_EUR(),'EUR'),'pos'),
+    rowD('SWICA-Referenz '+selectedYear,plain(swicaRef),plain(swicaRef*12),'',alter<19?'0–18 J.':alter<26?'19–25 J.':'ab 26 J.'),
+    rowD('KV-Abzug',neg(kvAbzugEurM,'EUR'),neg(kvAbzugEurM*12,'EUR'),'neg',kvMode==='eur'?'Eigener EUR-Wert':`CHF×${getCHF_EUR().toFixed(4)}`),
+    rowD('Echtes Netto (nach allem)',plain(echtNettoM_EUR,'EUR'),plain(echtNettoJ_EUR,'EUR'),'pos',`${echtQuote.toFixed(1)}% von Brutto ${fmtN(bruttoEurM,'EUR')}/Mt.`,true),
   ],'rows-kv');
 
-  // ── Balken ──
   const base=massgebendM;
   const segs=[
-    {l:'Netto',     p2:nettoM_CHF/base*100,    c:'var(--accent)',  tc:'var(--btn-active-text)'},
-    {l:'CH-SV',     p2:chAbzuegeAN/base*100,   c:'#3a7a9c',        tc:'#fff'},
-    {l:'CH-QST',   p2:chQST_M/base*100,        c:'var(--ch-red)',  tc:'#fff'},
-    {l:'DE-ESt',   p2:deGesamtM_CHF/base*100,  c:'var(--de-gold)', tc:'var(--btn-active-text)'},
-    {l:'AG-Extras', p2:agZuschlagM/base*100,   c:'var(--purple)',  tc:'#fff'},
+    {l:'Netto',p2:nettoM_CHF/base*100,c:'var(--accent)'},
+    {l:'CH-SV',p2:chAbzuegeAN/base*100,c:'#3a7a9c'},
+    {l:'CH-QST',p2:chQST_M/base*100,c:'#c0554a'},
+    {l:'DE-ESt',p2:deGesamtM_CHF/base*100,c:'#c4a93a'},
+    {l:'AG-Extras',p2:agZuschlagM/base*100,c:'#7a6a9c'},
   ].filter(s=>s.p2>0.2);
-  document.getElementById('bar-track').innerHTML=segs.map(s=>
-    `<div class="bar-segment" style="width:${s.p2.toFixed(2)}%;background:${s.c};color:${s.tc}">
-      ${s.p2>5?s.p2.toFixed(1)+'%':''}
-    </div>`).join('');
-  document.getElementById('bar-legend').innerHTML=segs.map(s=>
-    `<div class="legend-item"><div class="legend-dot" style="background:${s.c}"></div>${s.l}: ${s.p2.toFixed(1)}%</div>`
-  ).join('');
+  document.getElementById('bar-track').innerHTML=segs.map(s=>`<div class="bar-segment" style="width:${s.p2.toFixed(2)}%;background:${s.c};color:#fff">${s.p2>5?s.p2.toFixed(1)+'%':''}</div>`).join('');
+  document.getElementById('bar-legend').innerHTML=segs.map(s=>`<div class="legend-item"><div class="legend-dot" style="background:${s.c}"></div>${s.l}: ${s.p2.toFixed(1)}%</div>`).join('');
 
-  // ── Info-Box ──
   document.getElementById('info-box').innerHTML=`
-    <strong>Steuerjahr ${selectedYear} – Hinweise:</strong><br>
-    • <strong>Keine Lohnsteuer in CH:</strong> Besteuerung via deutsche <strong>Einkommensteuererklärung</strong> (Art. 15a DBA CH-DE).<br>
-    • <strong>ESt-Formel § 32a:</strong> Grundfreibetrag (${p.grundfreibetrag.toLocaleString('de')} €) in Progressionsformel integriert.<br>
-    • <strong>NBUV-WK:</strong> 50 % der Gesamtprämie (AN ${fmtCHF(nbuvAnM)} + AG ${fmtCHF(nbuvAg)} CHF/Mt.) = ${fmtCHF(nbuvWkAbzugJ)} EUR/J. als Werbungskosten abgesetzt.<br>
-    • <strong>Maßgebender Lohn:</strong> ${fmtCHF(massgebendM)} CHF/Mt. (Brutto + ${fmtCHF(agZuschlagM)} CHF AG-Extras).<br>
-    • <strong>KV voll absetzbar:</strong> SWICA-KVG → ${fmtCHF(saKV)} EUR/J. als Sonderausgaben (§ 10 Abs. 1 Nr. 3 EStG).<br>
-    • <strong>CH-QST-Anrechnung:</strong> ${fmtCHF(chQST_M)} CHF/Mt. → ${fmtCHF(anrechnungJ/12)} EUR/Mt. angerechnet.<br>
-    ${pendler&&km>0?(()=>{
-      const satz2026 = selectedYear>=2026;
-      const satzInfo = satz2026
-        ? `${km} km × ${arbeitstage} Tage × 0,38 € = ${fmtCHF(pendlerPauschaleRoh)} €`
-        : `${km} km: ${Math.min(km,20)}×${arbeitstage}×0,30 + ${Math.max(0,km-20)}×${arbeitstage}×0,38 = ${fmtCHF(pendlerPauschaleRoh)} €`;
-      return `• <strong>Pendlerpauschale (${selectedYear>=2026?'0,38 €/km ab km 1':'0,30 € / 0,38 € ab km 21'}):</strong> ${satzInfo}${pendlerPauschaleRoh>4500?' → gedeckelt auf 4.500 €':''}<br>`;
-    })():''}
-    • <strong>WK-Summe:</strong> Pendler ${fmtCHF(pendlerPauschale)} € + NBUV-WK ${fmtCHF(nbuvWkAbzugJ)} €${weitereWkJ>0?' + weitere '+fmtCHF(weitereWkJ)+' €':''} = ${fmtCHF(wkRohsumme)} €${wkNutzePauschale?' → AN-Pauschbetrag '+p.wkPauschale+' € greift':''}<br>
-    • <strong>WK gesamt abgezogen:</strong> ${fmtCHF(wkAbzug)} EUR/J.<br>
-    • Familienstand: <strong>${fsLabel[fs]}</strong> · Alter: <strong>${alter} J.</strong> · BVG-Spar AN: <strong>${(bvgSparRateAN(alter)*100).toFixed(1)}%</strong><br>
-    • <strong>Wechselkurs:</strong> ${getFxLabel()}
+    <strong>Steuerjahr ${selectedYear}</strong><br>
+    · Keine Lohnsteuer in CH: Besteuerung via deutsche <strong>Einkommensteuererklärung</strong> (Art. 15a DBA CH-DE)<br>
+    · Maßgebender Lohn: <strong>${fmtN(massgebendM)}/Mt.</strong> (Brutto + ${fmtN(agZuschlagM)} CHF AG-Extras)<br>
+    · WK gesamt: <strong>${fmtN(wkAbzug,'EUR')}/J.</strong>${wkNutzePauschale?' (AN-Pauschbetrag greift)':''}<br>
+    · KV voll absetzbar: SWICA-KVG → <strong>${fmtN(saKV,'EUR')}/J.</strong> als Sonderausgaben<br>
+    · CH-QST-Anrechnung: ${fmtN(chQST_M)}/Mt. → <strong>${fmtN(anrechnungJ/12,'EUR')}/Mt.</strong> angerechnet<br>
+    · Wechselkurs: <strong>${getFxLabel()}</strong>
   `;
 
-  document.getElementById('results').className='results visible';
-  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  const res=document.getElementById('results');
+  res.className='results visible';
+  res.scrollIntoView({behavior:'smooth',block:'start'});
 }
 </script>
 </body>
