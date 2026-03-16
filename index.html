@@ -74,7 +74,7 @@ h1 span{color:var(--accent);}
 .field:last-child{margin-bottom:0;}
 .field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;}
 .field label .hint{display:block;font-size:9px;letter-spacing:.5px;text-transform:none;color:var(--text-muted);opacity:.7;margin-top:2px;line-height:1.4;}
-select,input[type="number"]{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:7px 9px;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;}
+select,input[type="number"],input[type="text"]{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:7px 9px;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;}
 select:focus,input:focus{border-color:var(--accent);}
 input[type="number"]{-moz-appearance:textfield;appearance:textfield;}
 input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;}
@@ -215,7 +215,7 @@ footer{text-align:center;padding:32px 0 24px;font-family:'IBM Plex Mono',monospa
           <div>
             <label id="lbl-brutto-m" style="font-size:8px;letter-spacing:1px;">/ Monat</label>
             <div class="wrap">
-              <input type="number" id="brutto-m" value="6000" min="0" step="100" class="active-input" oninput="syncBrutto('m')">
+              <input type="text" id="brutto-m" value="6.000" class="active-input" oninput="syncBrutto('m')" onfocus="fmtFocus(this)" onblur="fmtBlur(this)">
               <span class="sfx">CHF</span>
             </div>
           </div>
@@ -223,7 +223,7 @@ footer{text-align:center;padding:32px 0 24px;font-family:'IBM Plex Mono',monospa
           <div>
             <label id="lbl-brutto-j" style="font-size:8px;letter-spacing:1px;">/ Jahr</label>
             <div class="wrap">
-              <input type="number" id="brutto-j" value="72000" min="0" step="1200" class="computed" oninput="syncBrutto('j')">
+              <input type="text" id="brutto-j" value="72.000" class="computed" oninput="syncBrutto('j')" onfocus="fmtFocus(this)" onblur="fmtBlur(this)">
               <span class="sfx">CHF</span>
             </div>
           </div>
@@ -349,6 +349,8 @@ footer{text-align:center;padding:32px 0 24px;font-family:'IBM Plex Mono',monospa
 
   <button class="calc-btn" onclick="calculate()">Berechnung starten</button>
 
+  <p class="note" style="margin-top:16px;">Alle Berechnungen sind Näherungswerte auf Basis von §32a EStG und den angegebenen Beitragssätzen. Individuelle Faktoren wie Progressionsvorbehalt oder Freibeträge aus anderen Einkünften bleiben unberücksichtigt. Kein Ersatz für individuelle Steuerberatung · Alle Angaben ohne Gewähr</p>
+
   <!-- Ergebnisse -->
   <div class="results" id="results">
     <div style="margin-top:24px;margin-bottom:8px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);">// Ergebnis</div>
@@ -416,16 +418,12 @@ footer{text-align:center;padding:32px 0 24px;font-family:'IBM Plex Mono',monospa
       <div class="info-card" id="info-box"></div>
     </div>
 
-    <p class="note">
-      ⚠ Schätzung – kein Ersatz für Steuerberatung. Art. 15a DBA CH-DE. CH-QST 4,5 % auf Brutto.
-      SWICA-Prämien: offizielle BAG-Prämienliste. ESt-Formel § 32a EStG.<br>
-      Wechselkurse: 2024: 100 CHF = 104,50 EUR · 2025: 100 CHF = 106,50 EUR (Anlage N-Gre, Finanzämter BW/BMF) · Aktuell: EZB-Tageskurs.
-    </p>
+
   </div>
 
 </div><!-- /container -->
 
-<footer>&copy; 2025 Robin Glowania &middot; Kein Rechtsanspruch</footer>
+<footer>&copy; Robin Glowania</footer>
 
 <script>
 // ── Theme ──────────────────────────────────────────────────────
@@ -518,25 +516,29 @@ function setPeriod(p){
   if(p==='monthly'){
     mInput.classList.add('active-input');mInput.classList.remove('computed');mInput.readOnly=false;
     jInput.classList.remove('active-input');jInput.classList.add('computed');jInput.readOnly=true;
-    jInput.value=((parseFloat(mInput.value)||0)*12).toFixed(0);
+    jInput.value=fmtDe((parseDe(mInput.value))*12);
   }else{
     jInput.classList.add('active-input');jInput.classList.remove('computed');jInput.readOnly=false;
     mInput.classList.remove('active-input');mInput.classList.add('computed');mInput.readOnly=true;
-    mInput.value=((parseFloat(jInput.value)||0)/12).toFixed(2);
+    mInput.value=fmtDe(parseDe(jInput.value)/12);
   }
   updateSwicaPreview();
 }
+function parseDe(s){return parseFloat(String(s).replace(/\./g,'').replace(',','.'))||0;}
+function fmtDe(n){return new Intl.NumberFormat('de-DE',{minimumFractionDigits:0,maximumFractionDigits:0}).format(Math.round(n));}
+function fmtFocus(el){el.value=String(parseDe(el.value)||'').replace(/^0$/,'');}
+function fmtBlur(el){const v=parseDe(el.value);if(v)el.value=fmtDe(v);}
 function syncBrutto(which){
-  if(which==='m'&&period==='monthly'){const m=parseFloat(document.getElementById('brutto-m').value)||0;document.getElementById('brutto-j').value=(m*12).toFixed(0);}
-  else if(which==='j'&&period==='yearly'){const j=parseFloat(document.getElementById('brutto-j').value)||0;document.getElementById('brutto-m').value=(j/12).toFixed(2);}
+  if(which==='m'&&period==='monthly'){const m=parseDe(document.getElementById('brutto-m').value);document.getElementById('brutto-j').value=fmtDe(m*12);}
+  else if(which==='j'&&period==='yearly'){const j=parseDe(document.getElementById('brutto-j').value);document.getElementById('brutto-m').value=fmtDe(j/12);}
 }
-function getBruttoM(){if(period==='monthly')return parseFloat(document.getElementById('brutto-m').value)||0;return(parseFloat(document.getElementById('brutto-j').value)||0)/12;}
+function getBruttoM(){if(period==='monthly')return parseDe(document.getElementById('brutto-m').value);return parseDe(document.getElementById('brutto-j').value)/12;}
 
 function selectYear(y){
   selectedYear=y;
   document.querySelectorAll('#year-selector .tab-btn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.year)===y));
   const p=PARAMS[y];
-  document.getElementById('year-info').textContent=`GFB ${p.grundfreibetrag.toLocaleString('de')} € · AHV ${(p.ahvRate*100).toFixed(2)}% · ALV ${(p.alvRate*100).toFixed(2)}%`;
+  document.getElementById('year-info').textContent=`GFB ${p.grundfreibetrag.toLocaleString('de-DE')} € · AHV ${(p.ahvRate*100).toFixed(2)}% · ALV ${(p.alvRate*100).toFixed(2)}%`;
   document.getElementById('ahv-display').value=(p.ahvRate*100).toFixed(2);
   document.getElementById('alv-display').value=(p.alvRate*100).toFixed(2);
   document.getElementById('ahv-hint').textContent=`Gesetzlich – ${y}`;
@@ -600,7 +602,7 @@ function calcESt(zve,p){
   return Math.floor(p.flat4*zve-p.k4);
 }
 
-function fmtN(n,cur='CHF'){if(n==null||isNaN(n))return'–';return new Intl.NumberFormat('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' '+cur;}
+function fmtN(n,cur='CHF'){if(n==null||isNaN(n))return'–';return new Intl.NumberFormat('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' '+cur;}
 const neg=(v,c='CHF')=>v===0?'—':'−'+fmtN(v,c);
 const pos=(v,c='CHF')=>v===0?'—':'+'+fmtN(v,c);
 const plain=(v,c='CHF')=>fmtN(v,c);
@@ -710,7 +712,7 @@ function calculate(){
     rowS('WK-Abzug gesamt',neg(wkAbzug/12*getCHF_EUR(),'EUR')+' / '+neg(wkAbzug,'EUR'),'neg',
       wkNutzePauschale?`AN-Pauschbetrag ${p.wkPauschale} € greift`:`Pendler ${fmtN(pendlerPauschale,'EUR')}${hoPauschale>0?' + HO '+fmtN(hoPauschale,'EUR'):''} + NBUV-WK ${fmtN(Math.round(nbuvWkAbzugJ),'EUR')}${weitereWkJ>0?' + weitere '+fmtN(weitereWkJ,'EUR'):''} /J.`),
     rowS('SA: Altersvorsorge §10 Abs.1 Nr.2a',neg(saAlter/12,'EUR')+' / '+neg(saAlter,'EUR'),'neg',
-      `AHV/IV+BVG ${fmtN(Math.round(alterVorsorgeGesamtEur),'EUR')} − AG ${fmtN(Math.round(agAlterEurCorr),'EUR')} = ${fmtN(Math.round(saAlterRoh),'EUR')}, max. ${saAlterHoechst.toLocaleString('de')} €`),
+      `AHV/IV+BVG ${fmtN(Math.round(alterVorsorgeGesamtEur),'EUR')} − AG ${fmtN(Math.round(agAlterEurCorr),'EUR')} = ${fmtN(Math.round(saAlterRoh),'EUR')}, max. ${saAlterHoechst.toLocaleString('de-DE')} €`),
     rowS('SA: KV-Basisschutz §10 Abs.1 Nr.3',neg(saKV/12,'EUR')+' / '+neg(saKV,'EUR'),'neg',`SWICA-Prämie ${fmtN(kvChfM)}/Mt. voll absetzbar`),
     rowS('ZVE',plain(zve,'EUR'),'',`Brutto ${fmtN(Math.round(massgebendJ*getCHF_EUR()),'EUR')} − WK ${fmtN(Math.round(wkAbzug),'EUR')} − SA ${fmtN(Math.round(saGesamt),'EUR')}`),
     rowD('ESt brutto (§32a)',neg(estJ/12,'EUR'),neg(estJ,'EUR'),'tax'),
